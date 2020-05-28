@@ -13,7 +13,13 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function(){
-  var geojsonLocation = "https://arzenchan.github.io/Observatory2020/TestMapSite/FoodOffenders.geojson";
-  map.addSource('source_id', { type: 'geojson', data: geojsonLocation});
+  var geojsonLocation = "FoodOffenders.geojson";
+  map.addSource('Food_Offenders', { type: 'geojson', data: geojsonLocation});
   console.log("Loaded file from: "+geojsonLocation);
+  
+  map.addLayer({
+    'id': 'Food_Offenders',
+    'type': 'symbol',
+    'source': 'Food_Offenders',
+  });
 });
