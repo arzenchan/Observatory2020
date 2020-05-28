@@ -19,7 +19,12 @@ map.on('load', function(){
   
   map.addLayer({
     'id': 'Food_Offenders',
-    'type': 'symbol',
+    'type': 'circle',
     'source': 'Food_Offenders',
+    'layout': {},
+    'paint': {
+      'circle-radius': 5,
+      'circle-color': '#3887be'
+    }
   });
 });
