@@ -1,11 +1,13 @@
 
 //Arzen Chan
-//June 8, 2020
+//June 5, 2020
 var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 
+//URLS
 var geojson_Food_Offenders = "https://arzenchan.github.io/Observatory2020/TestMapSite/FoodOffenders.geojson";
+var geojson_Water_Fountain = "https://arzenchan.github.io/Observatory2020/TestMapSite/FontEau.geojson"
 
-//base tileset using MapBox
+//Base tileset using MapBox
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -15,13 +17,63 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiYXJ6ZW5jaGFuIiwiYSI6ImNqc2V5eDRnczBud3Y0YXFuZThhdDlucjgifQ.2wvGQ9Ok5wAZSVg5FRP06w'
 }).addTo(mainMap);
 
-var foodOffendersLayer = L.geoJson.ajax(geojson_Food_Offenders,{
-  onEachFeature: onEachFeature
-});
-foodOffendersLayer.addTo(mainMap);
+//LAYER STYLES
+var FoodOffenStyle = {
+    radius: 3,
+    fillColor: "#d92929",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+var FontEauStyle = {
+    radius: 3,
+    fillColor: "#3975c4",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
 
-function onEachFeature(feature, layer) {
+//ADDING LAYERS START
+//Adding Food Offenders Layer
+var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, FoodOffenStyle);
+  },
+  onEachFeature: onEachFeature_FoodOffen
+});
+foodOffenLayer.addTo(mainMap);
+
+function onEachFeature_FoodOffen(feature, layer) {
     if (feature.properties && feature.properties.description) {
-        layer.bindPopup(feature.properties.description);
+        layer.bindPopup(
+        'Établissement: '+feature.properties.etablissement+
+        '<br>Propriétaire: '+feature.properties.proprietaire+
+        '<br>Adresse: '+feature.properties.adresse+
+        '<br>Catégorie: '+feature.properties.categorie+
+        '<br>Description: '+feature.properties.description);
     }
 }
+//Adding Water Fountain Layer
+var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, FontEauStyle);
+  },
+  onEachFeature: onEachFeature_FontEau
+});
+fontEauLayer.addTo(mainMap);
+function onEachFeature_FontEau(feature, layer) {
+    if (feature.properties && feature.properties.Nom_parc_lieu) {
+        layer.bindPopup(feature.properties.Nom_parc_lieu);
+    }
+}
+//ADDING LAYERS END
+
+//Visibility Options
+var overlays = {
+  "● Food Offenders" : foodOffenLayer,
+  "● Water Fountains" : fontEauLayer
+}
+
+L.control.layers("",overlays).addTo(mainMap)
