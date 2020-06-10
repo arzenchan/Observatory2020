@@ -4,8 +4,8 @@
 var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 
 //URLS
-var geojson_Food_Offenders = "https://arzenchan.github.io/Observatory2020/TestMapSite/FoodOffenders.geojson";
-var geojson_Water_Fountain = "https://arzenchan.github.io/Observatory2020/TestMapSite/FontEau.geojson"
+var geojson_Food_Offenders = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/FoodOffenders.geojson";
+var geojson_Water_Fountain = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/FontEau.geojson"
 
 //Base tileset using MapBox
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -43,8 +43,6 @@ var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
   },
   onEachFeature: onEachFeature_FoodOffen
 });
-foodOffenLayer.addTo(mainMap);
-
 function onEachFeature_FoodOffen(feature, layer) {
     if (feature.properties && feature.properties.description) {
         layer.bindPopup(
@@ -55,6 +53,9 @@ function onEachFeature_FoodOffen(feature, layer) {
         '<br>Description: '+feature.properties.description);
     }
 }
+
+foodOffenLayer.addTo(mainMap);
+
 //Adding Water Fountain Layer
 var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
   pointToLayer: function (feature, latlng) {
@@ -62,18 +63,23 @@ var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
   },
   onEachFeature: onEachFeature_FontEau
 });
-fontEauLayer.addTo(mainMap);
 function onEachFeature_FontEau(feature, layer) {
     if (feature.properties && feature.properties.Nom_parc_lieu) {
         layer.bindPopup(feature.properties.Nom_parc_lieu);
     }
 }
+
+fontEauLayer.addTo(mainMap);
+
 //ADDING LAYERS END
 
 //Visibility Options
 var overlays = {
-  "● Food Offenders" : foodOffenLayer,
-  "● Water Fountains" : fontEauLayer
+  "Food Offenders" : foodOffenLayer,
+  "Water Fountains" : fontEauLayer
 }
 
-L.control.layers("",overlays).addTo(mainMap)
+//L.control.layers("",overlays).addTo(mainMap)
+
+foodOffenLayer.visibility = false;
+
