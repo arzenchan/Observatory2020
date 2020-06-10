@@ -1,30 +1,27 @@
 
 //Arzen Chan
-//May 25, 2020
-//Applicable Documentation: https://docs.mapbox.com/mapbox-gl-js/example/data-driven-circle-colors/
+//June 8, 2020
+var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 
+var geojson_Food_Offenders = "https://arzenchan.github.io/Observatory2020/TestMapSite/FoodOffenders.geojson";
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ6ZW5jaGFuIiwiYSI6ImNqc2V5eDRnczBud3Y0YXFuZThhdDlucjgifQ.2wvGQ9Ok5wAZSVg5FRP06w';
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  zoom: 10,
-  center: [-73.711284, 45.556205]
+//base tileset using MapBox
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiYXJ6ZW5jaGFuIiwiYSI6ImNqc2V5eDRnczBud3Y0YXFuZThhdDlucjgifQ.2wvGQ9Ok5wAZSVg5FRP06w'
+}).addTo(mainMap);
+
+var foodOffendersLayer = L.geoJson.ajax(geojson_Food_Offenders,{
+  onEachFeature: onEachFeature
 });
+foodOffendersLayer.addTo(mainMap);
 
-map.on('load', function(){
-  var geojsonLocation = "https://arzenchan.github.io/Observatory2020/TestMapSite/FoodOffenders.geojson";
-  map.addSource('Food_Offenders', { type: 'geojson', data: geojsonLocation});
-  console.log("Loaded file from: "+geojsonLocation);
-  
-  map.addLayer({
-    'id': 'Food_Offenders',
-    'type': 'circle',
-    'source': 'Food_Offenders',
-    'layout': {},
-    'paint': {
-      'circle-radius': 5,
-      'circle-color': '#3887be'
+function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.description) {
+        layer.bindPopup(feature.properties.description);
     }
-  });
-});
+}
