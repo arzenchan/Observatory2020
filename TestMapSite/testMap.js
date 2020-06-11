@@ -18,14 +18,15 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mainMap);
 
 //HIDDING/SHOWING LAYERS
-              
-function layerToggle(toToggle, toToggleStyle){
+function layerToggle(toToggle, toToggleStyle, divID){
   if(toToggleStyle['shown']){
     mainMap.removeLayer(toToggle);
+    document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
     toToggleStyle['shown']=false;
   }
   else{
     toToggle.addTo(mainMap);
+    document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
     toToggleStyle['shown']=true;
   }
 }
@@ -38,6 +39,10 @@ var FoodOffenStyle = {
     weight: 1,
     opacity: 1,
     fillOpacity: 0.8,
+    
+    //custom variables
+    showColour: "#d92929",//colour of the dot and the legend
+    hideColour: "#d68d8d",//colour of the legend when hidden
     shown: true
 };
 var FontEauStyle = {
@@ -47,6 +52,10 @@ var FontEauStyle = {
     weight: 1,
     opacity: 1,
     fillOpacity: 0.8,
+    
+    //custom variables
+    showColour: "#3975c4",
+    hideColour: "#abc1de",
     shown: true
 };
 

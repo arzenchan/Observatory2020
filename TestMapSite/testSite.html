@@ -25,10 +25,18 @@ Arzen Chan
   <h1>Carte Alimentaire de Montréal - Montréal Food Map</h1>
 </header>
 <body>
-  <div id="mainOptions" class="options">
+  <div id="mainOptions">
     <h3>Layers</h3>
-    <a href="javascript:void(0)" onclick="layerToggle(foodOffenLayer, FoodOffenStyle)">Food Offences</a><br>
-    <a href="javascript:void(0)" onclick="layerToggle(fontEauLayer, FontEauStyle)">Water Fountains</a>
+    <div class = "option" id = "foodOffLeg" style="background-color: #d92929">
+      <a href="javascript:void(0)" onclick="layerToggle(foodOffenLayer, FoodOffenStyle, 'foodOffLeg')">
+        Food Offences
+      </a>
+    </div>
+    <div class = "option" id = "fontEauLeg" style="background-color: #3975c4">
+      <a href="javascript:void(0)" onclick="layerToggle(fontEauLayer, FontEauStyle, 'fontEauLeg')">
+        Water Fountains
+      </a>
+    </div>
   </div>
   
   <div id ='mapDiv'>
