@@ -17,6 +17,19 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiYXJ6ZW5jaGFuIiwiYSI6ImNqc2V5eDRnczBud3Y0YXFuZThhdDlucjgifQ.2wvGQ9Ok5wAZSVg5FRP06w'
 }).addTo(mainMap);
 
+//HIDDING/SHOWING LAYERS
+              
+function layerToggle(toToggle, toToggleStyle){
+  if(toToggleStyle['shown']){
+    mainMap.removeLayer(toToggle);
+    toToggleStyle['shown']=false;
+  }
+  else{
+    toToggle.addTo(mainMap);
+    toToggleStyle['shown']=true;
+  }
+}
+
 //LAYER STYLES
 var FoodOffenStyle = {
     radius: 3,
@@ -24,7 +37,8 @@ var FoodOffenStyle = {
     color: "#000",
     weight: 1,
     opacity: 1,
-    fillOpacity: 0.8
+    fillOpacity: 0.8,
+    shown: true
 };
 var FontEauStyle = {
     radius: 3,
@@ -32,7 +46,8 @@ var FontEauStyle = {
     color: "#000",
     weight: 1,
     opacity: 1,
-    fillOpacity: 0.8
+    fillOpacity: 0.8,
+    shown: true
 };
 
 //ADDING LAYERS START
@@ -80,6 +95,12 @@ var overlays = {
 }
 
 //L.control.layers("",overlays).addTo(mainMap)
+//This is the standard and built in version to show/hide layers
 
-foodOffenLayer.visibility = false;
+
+
+
+
+
+
 

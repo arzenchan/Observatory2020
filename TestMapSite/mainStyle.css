@@ -10,3 +10,23 @@ header{
 h1{
   font-weight: normal;
 }
+
+h3{
+  font-weight: normal;
+}
+
+#mainOptions{
+  width: 250px;
+  float: right;
+  margin: 15px;
+}
+#mainOptions a{
+  text-decoration: none;
+}
+
+#mainMap{
+  float: none; /* not needed, just for clarification */
+  /* the next props are meant to keep this block independent from the other floated one */
+  width: auto;
+  overflow: hidden;
+}
