@@ -32,6 +32,18 @@ h3{
   display: block;
 }
 
+.chloroLegend{
+  font-size: 10pt;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
 #mainOptions a{
   text-decoration: none;
   color: white;
@@ -43,3 +55,8 @@ h3{
   width: auto;
   overflow: hidden;
 }
+
+#incomeLegend{
+  display: block;
+}
+

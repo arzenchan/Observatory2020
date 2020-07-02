@@ -19,29 +19,36 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mainMap);
 
 //HIDDING/SHOWING LAYERS
-function layerToggle(toToggle, toToggleStyle, divID){
+function layerToggle(toToggle, toToggleStyle, divID){//for standard marker layers
   if(toToggleStyle['shown']){
     mainMap.removeLayer(toToggle);
     document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
+    //document.getElementById(divID).style.background = toToggleStyle['hideColour'];
+    document.getElementById(divID).style.textDecoration = "line-through";
     toToggleStyle['shown']=false;
   }
   else{
     toToggle.addTo(mainMap);
     document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
+    document.getElementById(divID).style.textDecoration = "none";
     toToggleStyle['shown']=true;
   }
 }
 
-//HIDDING/SHOWING LAYERS
-function chloroToggle(toToggle, toToggleStyle, divID){
+function chloroToggle(toToggle, toToggleStyle, divID, legend){//for chloropleth layers
   if(toToggleStyle['shown']){
     mainMap.removeLayer(toToggle);
     document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
+    document.getElementById(divID).style.textDecoration = "line-through";
+    document.getElementById(legend).style.display = "none";
     toToggleStyle['shown']=false;
+    
   }
   else{
     toToggle.addTo(mainMap);
     document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
+    document.getElementById(divID).style.textDecoration = "none";
+    document.getElementById(legend).style.display = "block";
     toToggleStyle['shown']=true;
   }
 }

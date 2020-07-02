@@ -42,16 +42,26 @@ Arzen Chan
     <p></p>
     
     <div class = "option" id = "incomeLeg" style="background-color: #666666">
-      <a href="javascript:void(0)" onclick="chloroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg')">
+      <a href="javascript:void(0)" onclick="chloroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg', 'incomeLegend')">
         Income
       </a>
+      <div id="incomeLegend">
+        <table class = "chloroLegend">
+          <tr><td style="color: #ffffff; -webkit-text-stroke: 1px grey; ">⬤</td><td>&lt;15k</td></tr>
+          <tr><td style="color: #cccccc">⬤</td><td>15k-30k</td></tr>
+          <tr><td style="color: #999999">⬤</td><td>30k-45k</td></tr>
+          <tr><td style="color: #666666">⬤</td><td>45k-60k</td></tr>
+          <tr><td style="color: #333333">⬤</td><td>60k-75k</td></tr>
+          <tr><td style="color: #000000">⬤</td><td>&gt;75k</td></tr>
+        </table>
+      </div>
     </div>
   </div>
   
   <div id ='mapDiv'>
     <div id='mainMap' style='height: 800px;'></div> 
     <script src="testMap.js"></script>
-    <script>chloroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg')</script> <!-- Default to disabled -->
+    <script>chloroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg', 'incomeLegend')</script> <!-- Default to disabled -->
   </div>
   
   <p>A work in progress.</p>
