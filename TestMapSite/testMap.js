@@ -22,15 +22,14 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 function layerToggle(toToggle, toToggleStyle, divID){//for standard marker layers
   if(toToggleStyle['shown']){
     mainMap.removeLayer(toToggle);
-    document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
-    //document.getElementById(divID).style.background = toToggleStyle['hideColour'];
-    document.getElementById(divID).style.textDecoration = "line-through";
+    //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
+    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggleStyle['showColour']+","+toToggleStyle['showColour']+" 10px,"+toToggleStyle['hideColour']+" 10px, "+toToggleStyle['hideColour']+" 20px)";
     toToggleStyle['shown']=false;
   }
   else{
     toToggle.addTo(mainMap);
+    document.getElementById(divID).style.background = "initial";
     document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
-    document.getElementById(divID).style.textDecoration = "none";
     toToggleStyle['shown']=true;
   }
 }
@@ -38,16 +37,16 @@ function layerToggle(toToggle, toToggleStyle, divID){//for standard marker layer
 function chloroToggle(toToggle, toToggleStyle, divID, legend){//for chloropleth layers
   if(toToggleStyle['shown']){
     mainMap.removeLayer(toToggle);
-    document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
-    document.getElementById(divID).style.textDecoration = "line-through";
+    //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
+    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggleStyle['showColour']+","+toToggleStyle['showColour']+" 10px,"+toToggleStyle['hideColour']+" 10px, "+toToggleStyle['hideColour']+" 20px)";
     document.getElementById(legend).style.display = "none";
     toToggleStyle['shown']=false;
     
   }
   else{
     toToggle.addTo(mainMap);
+    document.getElementById(divID).style.background = "initial";
     document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
-    document.getElementById(divID).style.textDecoration = "none";
     document.getElementById(legend).style.display = "block";
     toToggleStyle['shown']=true;
   }
