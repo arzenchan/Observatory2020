@@ -81,25 +81,13 @@ var IncomeTogStyle = {
 }
 
 function incomeStyle(feature){
-  var colour = getIncomeColour(feature.properties["Incomev2.csv.Med_Total_Inc"]);
-  if (colour == 'NoData'){
-    return {
-      fillColor: "#000",
-      color: "#000",
-      weight: 1,
-      fillOpacity: 0,
-      opacity: 0
-    };
-  }
-  else{
-    return {
-      fillColor: colour,
-      color: "#000",
-      weight: 1,
-      fillOpacity: .85,
-      opacity: 1
-    };
-  }
+  return {
+    fillColor: getIncomeColour(feature.properties["Incomev2.csv.Med_Total_Inc"]),
+    color: "#000",
+    weight: 1,
+    fillOpacity: .85,
+    opacity: 1,
+  };
 }
 
 //ADDING LAYERS START
@@ -155,32 +143,28 @@ function onEachFeature_Income(feature, layer) {
 }
 
 function getIncomeColour(input){
-  if (input == null){//nodata
-    return 'NoData'
-  }
-  else{
-    i = parseInt((input/90000)*6);
-    //https://colorbrewer2.org/
-    return  i == 0 ? '#ffffff'://0-15k
-            i == 1 ? '#cccccc'://15k-30k
-            i == 2 ? '#999999'://30k-45k
-            i == 3 ? '#666666'://45k-60k
-            i == 4 ? '#333333'://60k-75k
-                     '#000000';//>75k
-    
-    /*
-    return  i == 0 ? '#a50026':
-            i == 1 ? '#d73027':
-            i == 2 ? '#f46d43':
-            i == 3 ? '#fdae61':
-            i == 4 ? '#fee090':
-            i == 5 ? '#e0f3f8':
-            i == 6 ? '#abd9e9':
-            i == 7 ? '#74add1':
-            i == 8 ? '#4575b4':
-                     '#313695';
-    */
-  }
+  i = parseInt((input/90000)*6);
+  
+  //https://colorbrewer2.org/
+  return  i == 0 ? '#ffffff':
+          i == 1 ? '#cccccc':
+          i == 2 ? '#999999':
+          i == 3 ? '#666666':
+          i == 4 ? '#333333':
+                   '#000000';
+  
+  /*
+  return  i == 0 ? '#a50026':
+          i == 1 ? '#d73027':
+          i == 2 ? '#f46d43':
+          i == 3 ? '#fdae61':
+          i == 4 ? '#fee090':
+          i == 5 ? '#e0f3f8':
+          i == 6 ? '#abd9e9':
+          i == 7 ? '#74add1':
+          i == 8 ? '#4575b4':
+                   '#313695';
+  */
 }
 
 //creating pane for cesnsus information in order to ensure the census information is below the point data. 

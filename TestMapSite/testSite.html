@@ -27,6 +27,7 @@ Arzen Chan
 <body>
   <div id="mainOptions">
     <h3>Layers</h3>
+    <p>Click to show/hide</p>
     <div class = "option" id = "foodOffLeg" style="background-color: #d92929">
       <a href="javascript:void(0)" onclick="layerToggle(foodOffenLayer, FoodOffenStyle, 'foodOffLeg')">
         Food Offences
@@ -37,11 +38,20 @@ Arzen Chan
         Water Fountains
       </a>
     </div>
+    
+    <p></p>
+    
+    <div class = "option" id = "incomeLeg" style="background-color: #666666">
+      <a href="javascript:void(0)" onclick="chloroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg')">
+        Income
+      </a>
+    </div>
   </div>
   
   <div id ='mapDiv'>
     <div id='mainMap' style='height: 800px;'></div> 
     <script src="testMap.js"></script>
+    <script>chloroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg')</script> <!-- Default to disabled -->
   </div>
   
   <p>A work in progress.</p>
