@@ -7,6 +7,7 @@ var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 var geojson_Food_Offenders   = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/FoodOffenders.geojson";
 var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/FontEau.geojson"
 var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/Income.geojson"
+var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/211.geojson"
 
 //Base tileset using MapBox
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -59,7 +60,7 @@ var FoodOffenStyle = {
     color: "#000",
     weight: 1,
     opacity: 1,
-    fillOpacity: 1,
+    fillOpacity: .8,
     
     //custom variables
     showColour: "#d92929",//colour of the dot and the legend
@@ -72,11 +73,25 @@ var FontEauStyle = {
     color: "#000",
     weight: 1,
     opacity: 1,
-    fillOpacity: 1,
+    fillOpacity: .8,
     
     //custom variables
     showColour: "#3975c4",
     hideColour: "#abc1de",
+    shown: true
+};
+
+var Serv211Style = {
+    radius: 3,
+    fillColor: "#3abf37",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: .8,
+    
+    //custom variables
+    showColour: "#3abf37",
+    hideColour: "#8dd68e",
     shown: true
 };
 
@@ -110,6 +125,7 @@ function incomeStyle(feature){
 
 //ADDING LAYERS START
 //Adding Food Offenders Layer
+console.log("Adding Food Offender Layer");
 var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
   pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, FoodOffenStyle);
@@ -119,6 +135,7 @@ var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
 function onEachFeature_FoodOffen(feature, layer) {
     if (feature.properties && feature.properties.description) {
         layer.bindPopup(
+        '<h2>Food Inspection Violation</h2>'+
         'Établissement: '+feature.properties.etablissement+
         '<br>Propriétaire: '+feature.properties.proprietaire+
         '<br>Adresse: '+feature.properties.adresse+
@@ -130,6 +147,7 @@ function onEachFeature_FoodOffen(feature, layer) {
 foodOffenLayer.addTo(mainMap);
 
 //Adding Water Fountain Layer
+console.log("Adding Water Fountain Layer");
 var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
   pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, FontEauStyle);
@@ -138,13 +156,39 @@ var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
 });
 function onEachFeature_FontEau(feature, layer) {
     if (feature.properties && feature.properties.Nom_parc_lieu) {
-        layer.bindPopup(feature.properties.Nom_parc_lieu);
+        layer.bindPopup(
+          '<h2>Water Fountain</h2>'+
+          'Park: '+feature.properties.Nom_parc_lieu
+        );
     }
 }
 fontEauLayer.addTo(mainMap);
 
+//Adding 211 Layer
+console.log("Adding 211 Layer");
+var serv211Layer = L.geoJson.ajax(geojson_211,{
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, Serv211Style);
+  },
+  onEachFeature: onEachFeature_211
+});
+function onEachFeature_211(feature, layer) {
+    if (feature.properties && feature.properties.description) {
+        layer.bindPopup(
+          '<h2>211 Listed Service</h2>'+
+          'Name: '            +feature.properties.name+
+          '<br>More Infomation to be added'   /*+
+          '<br>Website: '     +feature.proterties.description.AllFields.WebsiteAddress+
+          '<br>Phone Number: '+feature.proterties.description.AllFields.Phone1Number+
+          '<br>Hours: '       +feature.proterties.description.AllFields.HoursOfOperation+
+          '<br>Eligibility: ' +feature.proterties.description.AllFields.Eligibility*/
+        );
+    }
+}
+serv211Layer.addTo(mainMap);
 
 //Adding Income Layer
+console.log("Adding Income Layer");
 var incomeLayer = L.geoJson.ajax(geojson_Income,{
   style: incomeStyle,
   onEachFeature: onEachFeature_Income,
@@ -153,10 +197,16 @@ var incomeLayer = L.geoJson.ajax(geojson_Income,{
 });
 function onEachFeature_Income(feature, layer) {
   if (feature.properties && feature.properties["Incomev2.csv.Med_Total_Inc"]) {
-    layer.bindPopup("Median Income: $"+feature.properties["Incomev2.csv.Med_Total_Inc"]);
+    layer.bindPopup(
+      '<h2>Income</h2>'+
+      "Median Income: $"+feature.properties["Incomev2.csv.Med_Total_Inc"]
+    );
   }
   else{
-    layer.bindPopup("Median Income: No Information");
+    layer.bindPopup(
+      '<h2>Income</h2>'+
+      "Median Income: No Information"
+    );
   }
 }
 
@@ -200,6 +250,7 @@ incomeLayer.addTo(mainMap);
 var overlays = {
   "Food Offenders" : foodOffenLayer,
   "Water Fountains" : fontEauLayer,
+  "211 Listed Services" : serv211Layer,
   "Income": incomeLayer
 }
 
