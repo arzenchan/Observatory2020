@@ -4,10 +4,10 @@
 var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 
 //URLS
-var geojson_Food_Offenders   = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/FoodOffenders.geojson";
-var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/FontEau.geojson"
-var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/Income.geojson"
-var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSite/data/211.geojson"
+var geojson_Food_Offenders   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FoodOffenders.geojson";
+var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FontEau.geojson"
+var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/Income.geojson"
+var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/211.geojson"
 
 //Base tileset using MapBox
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {

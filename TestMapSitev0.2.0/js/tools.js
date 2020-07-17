@@ -5,7 +5,11 @@ var layerList = [
     incomeLayer
   ];
 
+mainMap.createPane('tools');
+mainMap.getPane('tools').style.zIndex = 250 
+
 var tool = "select";//Default tool is "select" which is used to select layers
+
 function toolSelect(toolIn){//used to toggle which tool is being selected
   if (tool != "select"){
     tool = "select";//change back to select when the button is clicked again
@@ -31,7 +35,7 @@ radDist
 */
 
 //Getting location of a click
-//Source: https://gis.stackexchange.com/questions/39055/getting-lat-long-of-clicked-location-using-leaflet-api
+//Helpful source: https://gis.stackexchange.com/questions/39055/getting-lat-long-of-clicked-location-using-leaflet-api
 
 mainMap.on('click', function(e) {
   console.log("Clicked at: " + e.latlng.lat + ", " + e.latlng.lng)
@@ -43,6 +47,6 @@ mainMap.on('click', function(e) {
     radDist(clickLatLng, activeLayer);
   }
 
-  //==more clicky tools here==
+  //==more clicky tools go here==
 
 });

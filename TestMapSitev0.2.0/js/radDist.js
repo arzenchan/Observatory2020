@@ -1,6 +1,6 @@
 //Distance Tool
-var radDistLayer = L.layerGroup();
-var radDistCirc = L.circle();
+var radDistLayer = L.layerGroup({pane: 'tools'});
+var radDistCirc = L.circle({pane: 'tools'});
 
 function radDist(latLngIn, layerIn, range = 1000){
     var inRadius = [];
@@ -15,6 +15,7 @@ function radDist(latLngIn, layerIn, range = 1000){
 
     //Adding circle
     radDistCirc = L.circle(latLngIn, {
+        pane: 'tools',
         radius: range,
         color: 'black',
         fillColor: 'white',
@@ -26,6 +27,7 @@ function radDist(latLngIn, layerIn, range = 1000){
         var line = L.polyline(
             [inRadius[i].getLatLng(), latLngIn], 
             {
+                pane: 'tools',
                 color: 'black'
             });
         radDistLayer.addLayer(line);
