@@ -2,11 +2,27 @@
 var radDistLayer = L.layerGroup({pane: 'tools'});
 var radDistCirc = L.circle({pane: 'tools'});
 
+var radDistSlider = document.getElementById("distToolSlider");
+var radDistDisplay = document.getElementById("distToolRad");
+radDistDisplay.innerHTML = radDistSlider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+radDistSlider.oninput = function() {
+    radDistDisplay.innerHTML = this.value;
+    if (mainMap.hasLayer(radDistLayer)){//only change the values if the map has the layer on it. This prevents it from locking up if the slider is changed without a click
+        radDist(clickLatLng, activeLayer, radDistSlider.value);
+    }
+}
+
 function radDist(latLngIn, layerIn, range = 1000){
     var inRadius = [];
     layerIn.eachLayer(function (layer){
-        if (layer.getLatLng().distanceTo(latLngIn) <= range){
-            inRadius.push(layer);
+        var dist = layer.getLatLng().distanceTo(latLngIn)
+        if (dist <= range){
+            inRadius.push({
+                layer: layer, 
+                distance: dist
+            });
         }
     });
 
@@ -17,7 +33,7 @@ function radDist(latLngIn, layerIn, range = 1000){
     radDistCirc = L.circle(latLngIn, {
         pane: 'tools',
         radius: range,
-        color: 'black',
+        color: 'red',
         fillColor: 'white',
         fillOpacity: 0.4
     }).addTo(mainMap);
@@ -25,10 +41,11 @@ function radDist(latLngIn, layerIn, range = 1000){
     //Adding lines to different points
     for (var i=0; i<inRadius.length; i++){
         var line = L.polyline(
-            [inRadius[i].getLatLng(), latLngIn], 
+            [inRadius[i].layer.getLatLng(), latLngIn], 
             {
                 pane: 'tools',
-                color: 'black'
+                color: 'hsl('+reverseNumber((inRadius[i].distance/range)*120, 0, 120)+', 90%, 60%)',
+                opacity: 80
             });
         radDistLayer.addLayer(line);
     }

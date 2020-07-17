@@ -15,6 +15,35 @@ h3{
   font-weight: normal;
 }
 
+.slider{
+  width: 100%;
+  height: 10px;
+  border-radius: 2px;  
+  border: none;
+  background: #d3d3d3;
+  outline: none;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%; 
+  border: none;
+  background: FireBrick;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: FireBrick;
+  cursor: pointer;
+  border: none;
+}
+
+
 #mainOptions{
   float: right;
 }
@@ -44,6 +73,16 @@ h3{
 }
 .tool a{
   color: black;
+}
+.toolOptions{
+  font-size: 11pt;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .chloroLegend{
