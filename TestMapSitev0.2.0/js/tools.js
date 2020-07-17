@@ -8,16 +8,20 @@ var layerList = [
 mainMap.createPane('tools');
 mainMap.getPane('tools').style.zIndex = 250 
 
-var tool = "select";//Default tool is "select" which is used to select layers
+var tool = "";//Default tool is "select" which is used to select layers
+toolSelect("select");
 
 function toolSelect(toolIn){//used to toggle which tool is being selected
-  if (tool != "select"){
+  if (tool != "select" || toolIn == "select"){
     tool = "select";//change back to select when the button is clicked again
     for (var i = 0; i< layerList.length; i++){
       if (mainMap.hasLayer(layerList[i])){
           layerList[i].setInteractive(true);
       }
     }
+    
+    toolBorderClear();
+    document.getElementById("selectTool").style.border = "solid";
   }
   else{
     for (var i = 0; i< layerList.length; i++){
@@ -26,9 +30,21 @@ function toolSelect(toolIn){//used to toggle which tool is being selected
       }
     }
     tool = toolIn;
+    toolBorderClear();
+    if (toolIn == "radDist"){
+      document.getElementById("distanceTool").style.border = "solid";
+    }
   }
   console.log("Changed Tool: " + tool);
 }
+
+function toolBorderClear(){
+  var toolDomList = document.getElementsByClassName("tool");
+  for (var i = 0; i < toolDomList.length; i++) {
+    toolDomList[i].style.border = "none";
+  }
+}
+
 /*current tools:
 select
 radDist

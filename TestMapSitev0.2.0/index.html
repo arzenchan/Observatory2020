@@ -28,48 +28,57 @@ Arzen Chan
 </header>
 <body>
   <div id="mainOptions">
-    <h3>Layers</h3>
-    <p>Click to show/hide</p>
-    <div class = "option" id = "foodOffLeg" style="background-color: #d92929">
-      <a href="javascript:void(0)" onclick="layerToggle(foodOffenLayer, FoodOffenStyle, 'foodOffLeg')">
-        Food Offences
-      </a>
-    </div>
-    <div class = "option" id = "fontEauLeg" style="background-color: #3975c4">
-      <a href="javascript:void(0)" onclick="layerToggle(fontEauLayer, FontEauStyle, 'fontEauLeg')">
-        Water Fountains
-      </a>
-    </div>
-    <div class = "option" id = "211Leg" style="background-color: #3abf37">
-      <a href="javascript:void(0)" onclick="layerToggle(serv211Layer, Serv211Style, '211Leg')">
-        211 Listed Services
-      </a>
-    </div>
-    
-    <p><!--Income Gap--></p>
-    
-    <div class = "option" id = "incomeLeg" style="background-color: #666666">
-      <a href="javascript:void(0)" onclick="choroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg', 'incomeLegend')">
-        Income
-      </a>
-      <div id="incomeLegend">
-        <table class = "chloroLegend">
-          <tr><td style="color: #ffffff; -webkit-text-stroke: 1px grey; ">⬤</td><td>&lt;15k</td></tr>
-          <tr><td style="color: #cccccc">⬤</td><td>15k-30k</td></tr>
-          <tr><td style="color: #999999">⬤</td><td>30k-45k</td></tr>
-          <tr><td style="color: #666666">⬤</td><td>45k-60k</td></tr>
-          <tr><td style="color: #333333">⬤</td><td>60k-75k</td></tr>
-          <tr><td style="color: #000000">⬤</td><td>&gt;75k</td></tr>
-        </table>
+    <div id = "layersOptions" class = "optionsPanel">
+      <h3>Layers</h3>
+      <p>Click to show/hide</p>
+      <div class = "option" id = "foodOffLeg" style="background-color: #d92929">
+        <a href="javascript:void(0)" onclick="layerToggle(foodOffenLayer, FoodOffenStyle, 'foodOffLeg')">
+          Food Offences
+        </a>
       </div>
+      <div class = "option" id = "fontEauLeg" style="background-color: #3975c4">
+        <a href="javascript:void(0)" onclick="layerToggle(fontEauLayer, FontEauStyle, 'fontEauLeg')">
+          Water Fountains
+        </a>
+      </div>
+      <div class = "option" id = "211Leg" style="background-color: #3abf37">
+        <a href="javascript:void(0)" onclick="layerToggle(serv211Layer, Serv211Style, '211Leg')">
+          211 Listed Services
+        </a>
+      </div>
+      
+      <p><!--Income Gap--></p>
+      
+      <div class = "option" id = "incomeLeg" style="background-color: #666666">
+        <a href="javascript:void(0)" onclick="choroToggle(incomeLayer, IncomeTogStyle, 'incomeLeg', 'incomeLegend')">
+          Income
+        </a>
+        <div id="incomeLegend">
+          <table class = "chloroLegend">
+            <tr><td style="color: #ffffff; -webkit-text-stroke: 1px grey; ">⬤</td><td>&lt;15k</td></tr>
+            <tr><td style="color: #cccccc">⬤</td><td>15k-30k</td></tr>
+            <tr><td style="color: #999999">⬤</td><td>30k-45k</td></tr>
+            <tr><td style="color: #666666">⬤</td><td>45k-60k</td></tr>
+            <tr><td style="color: #333333">⬤</td><td>60k-75k</td></tr>
+            <tr><td style="color: #000000">⬤</td><td>&gt;75k</td></tr>
+          </table>
+        </div>
+      </div>
+      <p></p>
     </div>
-
-    <h3>Tools</h3>
-    <p>Click to activate</p>
-    <div class="tool" id="distanceTool">
-      <a href="javascript:void(0)" onclick="toolSelect('radDist')">
-        Distance
-      </a>
+    <div id = "toolsOptions" class = "optionsPanel">
+      <h3>Tools</h3>
+      <p>Click to activate</p>
+      <div class="tool" id="selectTool">
+        <a href="javascript:void(0)" onclick="toolSelect('select')">
+          Select
+        </a>
+      </div>
+      <div class="tool" id="distanceTool">
+        <a href="javascript:void(0)" onclick="toolSelect('radDist')">
+          Distance
+        </a>
+      </div>
     </div>
   </div>
   

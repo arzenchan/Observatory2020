@@ -16,10 +16,12 @@ h3{
 }
 
 #mainOptions{
-  padding: 15px;
-  padding-top: 0px;
-  width: 250px;
   float: right;
+}
+.optionsPanel{
+  padding: 15px;
+  padding-top: 5px;
+  width: 250px;
   margin: 15px;
   text-align: center;
   
@@ -30,6 +32,18 @@ h3{
 .option{
   padding: 3px;
   display: block;
+}
+.option a{
+  color: white;
+}
+
+.tool{
+  padding: 5px;
+  display: block;
+  background-color: aliceblue;
+}
+.tool a{
+  color: black;
 }
 
 .chloroLegend{
@@ -46,7 +60,6 @@ h3{
 
 #mainOptions a{
   text-decoration: none;
-  color: white;
 }
 
 #mainMap{
