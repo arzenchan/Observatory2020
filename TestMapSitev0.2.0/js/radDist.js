@@ -4,7 +4,7 @@ var radDistCirc = L.circle({pane: 'tools'});
 
 var radDistSlider = document.getElementById("distToolSlider");
 var radDistDisplay = document.getElementById("distToolRad");
-radDistDisplay.innerHTML = radDistSlider.value; // Display the default slider value
+radDistDisplay.innerHTML = radDistSlider.value + " m"; // Display the default slider value
 
 //Creating menu for selecting different layers
 layerSelectGen("distDropDown", "distLayerChange(this.value)");
@@ -32,7 +32,14 @@ function distLayerChange(layerName){
 
 // Update the current slider value (each time you drag the slider handle)
 radDistSlider.oninput = function() {
-    radDistDisplay.innerHTML = this.value;
+
+    if (this.value <1000){
+        radDistDisplay.innerHTML = this.value+" m";
+    }
+    else{
+        radDistDisplay.innerHTML = (this.value/1000)+" km";
+    }
+    
     if (mainMap.hasLayer(radDistLayer)){//only change the values if the map has the layer on it. This prevents it from locking up if the slider is changed without a click
         radDist(clickLatLng, radDistSlider.value);
     }
@@ -40,11 +47,18 @@ radDistSlider.oninput = function() {
 
 function radDist(latLngIn, range = 1000){
     var inRadius = [];
+    var totalPoints = 0;
+    var totalDistance = 0;//Divide by totalPoints to get average distance
+    var minDistance = range;
+
     layerIn = layerSearchName(document.getElementById("distDropBtn").value);
 
     layerIn.eachLayer(function (layer){
         var dist = layer.getLatLng().distanceTo(latLngIn)
         if (dist <= range){
+            totalPoints++;
+            totalDistance = totalDistance + dist;
+            if (dist<minDistance){minDistance=dist;}
             inRadius.push({
                 layer: layer, 
                 distance: dist
@@ -76,6 +90,17 @@ function radDist(latLngIn, range = 1000){
         radDistLayer.addLayer(line);
     }
     radDistLayer.addTo(mainMap);
+
+    //updating values in the info section
+    document.getElementById("distNumber").innerHTML = totalPoints;
+    if (totalPoints != 0){
+        document.getElementById("distAvgDist").innerHTML = Math.round((totalDistance/totalPoints) * 100) / 100 + " m";
+        document.getElementById("distNearDist").innerHTML = Math.round((minDistance) * 100) / 100 + " m";
+    }
+    else{
+        document.getElementById("distAvgDist").innerHTML = "--";
+        document.getElementById("distNearDist").innerHTML = "--";
+    }
 }
 
 //function to clear all the lines drawn by this tool
