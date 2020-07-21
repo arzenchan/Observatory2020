@@ -20,7 +20,10 @@ Arzen Chan
    <script src="js/leaflet.ajax.min.js"></script>
    <script src="js/miscScripts.js"></script>
 
-   <link rel="stylesheet" href="mainStyle.css">
+   <link rel="stylesheet" href="style/mainStyle.css">
+   <link rel="stylesheet" href="style/slider.css">
+   <link rel="stylesheet" href="style/dropdown.css">
+   <link rel="stylesheet" href="style/tools.css">
     
 </head>
 <header>
@@ -66,19 +69,38 @@ Arzen Chan
       </div>
       <p></p>
     </div>
+    
+    <!--TOOLS BELOW-->
+    
     <div id = "toolsOptions" class = "optionsPanel">
       <h3>Tools</h3>
       <p>Click to activate</p>
+      <!--SELECT TOOL-->
       <div class="tool" id="selectTool">
         <a href="javascript:void(0)" onclick="toolSelect('select')">
           Select
         </a>
       </div>
+      <!--DISTANCE TOOL-->
       <div class="tool" id="distanceTool">
         <a href="javascript:void(0)" onclick="toolSelect('radDist')">
           Distance
         </a>
         <div class ="toolOptions" id = "distToolOptions">
+          <p>
+            Number: <span id = "distNumber">0</span>
+          </p>
+          <p>
+            Avg. Distance: <span id = "distAvgDist">0</span>
+          </p>
+          <p>
+            Layer: <br>
+            <div class="dropdown">
+              <button id = "distDropBtn" value = "" onclick="distDropDown()" class="dropbtn">Default</button>
+              <div id="distDropDown" class="dropdown-content">
+              </div>
+            </div>
+          </p>
           <p>
             Radius: <span id="distToolRad"></span>
             <input type="range" min="1" max="2000" value="500" class="slider" id="distToolSlider"></br>

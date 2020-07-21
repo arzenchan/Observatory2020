@@ -6,16 +6,42 @@ var radDistSlider = document.getElementById("distToolSlider");
 var radDistDisplay = document.getElementById("distToolRad");
 radDistDisplay.innerHTML = radDistSlider.value; // Display the default slider value
 
+//Creating menu for selecting different layers
+layerSelectGen("distDropDown", "distLayerChange(this.value)");
+
+function distDropDown() {
+    document.getElementById("distDropDown").classList.toggle("show");
+}
+
+//Initialize Defaults
+document.getElementById("distDropBtn").value = layerList[0].name;//set the drop buttons to hold the value of the first layer. 
+distLayerChange(layerList[0].name);
+
+//function called when the active layer needs to be changed
+function distLayerChange(layerName){
+    var layer = layerSearchName(layerName);
+    button = document.getElementById("distDropBtn");
+    button.innerHTML = layer.name;
+    button.value = layer.name;
+    button.style.backgroundColor = layer.showColour;
+
+    if (mainMap.hasLayer(radDistLayer)){//only change the values if the map has the layer on it. This prevents it from locking up if the slider is changed without a click
+        radDist(clickLatLng, radDistSlider.value);
+    }
+}
+
 // Update the current slider value (each time you drag the slider handle)
 radDistSlider.oninput = function() {
     radDistDisplay.innerHTML = this.value;
     if (mainMap.hasLayer(radDistLayer)){//only change the values if the map has the layer on it. This prevents it from locking up if the slider is changed without a click
-        radDist(clickLatLng, activeLayer, radDistSlider.value);
+        radDist(clickLatLng, radDistSlider.value);
     }
 }
 
-function radDist(latLngIn, layerIn, range = 1000){
+function radDist(latLngIn, range = 1000){
     var inRadius = [];
+    layerIn = layerSearchName(document.getElementById("distDropBtn").value);
+
     layerIn.eachLayer(function (layer){
         var dist = layer.getLatLng().distanceTo(latLngIn)
         if (dist <= range){

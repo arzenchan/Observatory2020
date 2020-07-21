@@ -132,6 +132,13 @@ var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
   },
   onEachFeature: onEachFeature_FoodOffen
 });
+
+//adding custom keys
+foodOffenLayer.name = 'Food Offenders';
+foodOffenLayer.toolable = true;//for if this layer should be added to tool menus
+foodOffenLayer.showColour= "#d92929";//colour of the dot and the legend
+foodOffenLayer.hideColour= "#d68d8d";//colour of the legend when hidden
+
 function onEachFeature_FoodOffen(feature, layer) {
     if (feature.properties && feature.properties.description) {
         layer.bindPopup(
@@ -154,6 +161,12 @@ var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
   },
   onEachFeature: onEachFeature_FontEau
 });
+
+fontEauLayer.name = 'Water Fountains';
+fontEauLayer.toolable = true;
+fontEauLayer.showColour = "#3975c4";
+fontEauLayer.hideColour = "#abc1de";
+
 function onEachFeature_FontEau(feature, layer) {
     if (feature.properties && feature.properties.Nom_parc_lieu) {
         layer.bindPopup(
@@ -170,9 +183,14 @@ var serv211Layer = L.geoJson.ajax(geojson_211,{
   pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, Serv211Style);
   },
-  onEachFeature: onEachFeature_211,
-  interactive: false
+  onEachFeature: onEachFeature_211
 });
+
+serv211Layer.name = '211 Listed Services';
+serv211Layer.toolable = true;
+serv211Layer.showColour = "#3abf37";
+serv211Layer.hideColour = "#8dd68e";
+
 function onEachFeature_211(feature, layer) {
     if (feature.properties && feature.properties.description) {
         layer.bindPopup(
@@ -193,9 +211,14 @@ console.log("Adding Income Layer");
 var incomeLayer = L.geoJson.ajax(geojson_Income,{
   style: incomeStyle,
   onEachFeature: onEachFeature_Income,
-  pane: 'census'
-  
+  pane: 'census',
 });
+
+incomeLayer.name = 'Income';
+incomeLayer.toolable = false;
+incomeLayer.showColour = "#666666";
+incomeLayer.hideColour = "#aaaaaa";
+
 function onEachFeature_Income(feature, layer) {
   if (feature.properties && feature.properties["Incomev2.csv.Med_Total_Inc"]) {
     layer.bindPopup(
@@ -247,13 +270,14 @@ incomeLayer.addTo(mainMap);
 
 //ADDING LAYERS END
 
-//Visibility Options
-var overlays = {
-  "Food Offenders" : foodOffenLayer,
-  "Water Fountains" : fontEauLayer,
-  "211 Listed Services" : serv211Layer,
-  "Income": incomeLayer
-}
+//Lists of data
+
+var layerList = [
+  foodOffenLayer,
+  fontEauLayer,
+  serv211Layer,
+  incomeLayer
+];
 
 //L.control.layers("",overlays).addTo(mainMap)
 //This is the standard and built in version to show/hide layers

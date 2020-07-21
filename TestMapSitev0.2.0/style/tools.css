@@ -1,0 +1,33 @@
+.tool{
+    padding: 5px;
+    display: block;
+    background-color: aliceblue;
+    border: solid;
+    border-color: #efe9e1;
+}
+.tool a{
+    color: black;
+}
+.toolOptions{
+    font-size: 11pt;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* The following was used when I was trying to see about displaying the tool information in a table. I decided it looked better not in one. */
+.toolInfo{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+.toolInfoName{
+    text-align: right;
+}
+.toolInfoData{
+    text-align: left;
+}

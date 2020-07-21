@@ -1,0 +1,40 @@
+.dropbtn {
+    background-color: FireBrick;
+    color: white;
+    padding: 3px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%
+  }
+  /*
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: FireBrick;
+  }
+  */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown a:hover {background-color: #ddd;}
+  
+  .show {display: block;}
