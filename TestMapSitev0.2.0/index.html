@@ -8,7 +8,9 @@ Arzen Chan
 <html>
 <head>
   <title>Montreal Food Map - WIP Main Page</title>
-   <!-- Leaflet JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  
+  <!-- Leaflet JS -->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
@@ -107,6 +109,11 @@ Arzen Chan
           <p>
             Radius: <span id="distToolRad"></span>
             <input type="range" min="1" max="2000" value="500" class="slider" id="distToolSlider"></br>
+          </p>
+          <p>
+            <button onclick="radDistReset()">
+              Clear
+            </button>
           </p>
         </div>
       </div>

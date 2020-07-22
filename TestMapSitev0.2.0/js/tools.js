@@ -44,6 +44,7 @@ function toolBorderClear(){
 }
 
 //DROP DOWN MENU FOR LAYER SELECTION IN TOOLS
+//based upon https://www.w3schools.com/howto/howto_js_dropdown.asp
 function layerSelectGen(dropDownID, functionCall){//function for generating the dropdown for selecting the layer a tool is applied to. Source: https://stackoverflow.com/questions/8674618/adding-options-to-select-with-javascript
   var dropdown = document.getElementById(dropDownID);
 

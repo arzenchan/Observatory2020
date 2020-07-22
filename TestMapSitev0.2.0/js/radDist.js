@@ -53,8 +53,10 @@ function radDist(latLngIn, range = 1000){
 
     layerIn = layerSearchName(document.getElementById("distDropBtn").value);
 
+    //Getting points that are in the range specified
     layerIn.eachLayer(function (layer){
         var dist = layer.getLatLng().distanceTo(latLngIn)
+        //testing if the point is in the range
         if (dist <= range){
             totalPoints++;
             totalDistance = totalDistance + dist;
