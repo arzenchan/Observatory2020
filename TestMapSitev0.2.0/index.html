@@ -20,6 +20,8 @@ Arzen Chan
    crossorigin=""></script>
    
    <script src="js/leaflet.ajax.min.js"></script>
+   <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+
    <script src="js/miscScripts.js"></script>
 
    <link rel="stylesheet" href="style/mainStyle.css">
@@ -76,7 +78,8 @@ Arzen Chan
     
     <div id = "toolsOptions" class = "optionsPanel">
       <h3>Tools</h3>
-      <p>Click to activate</p>
+      <p>Interactive</p>
+      Click to select tool<br>
       <!--SELECT TOOL-->
       <div class="tool" id="selectTool">
         <a href="javascript:void(0)" onclick="toolSelect('select')">
@@ -117,6 +120,36 @@ Arzen Chan
           </p>
         </div>
       </div>
+
+      <p>Basemap</p>
+      <!--HEATMAP TOOL-->
+      <div class="tool" id="heatmapTool">
+        <a href="javascript:void(0)" onclick="">
+          Heatmap
+        </a>
+        <div class ="toolOptions" id = "distToolOptions"> 
+          <p>
+            <div class="dropdown">
+              Layer: <br>
+              <button id = "heatDropBtn" value = "" onclick="heatDropDown()" class="dropbtn">Select Layer</button>
+              <div id="heatDropDown" class="dropdown-content">
+              </div>
+            </div>
+          </p>
+          <p>
+            Intensity: <span id="heatIntensity"></span>
+            <input type="range" min="1" max="2000" value="500" class="slider" id="heatToolSlider"></br>
+          </p>
+          <p>
+            <button onclick="heatmapShow()">
+              Show
+            </button>
+            <button onclick="heatmapHide()">
+              Hide
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
   
@@ -134,6 +167,7 @@ Arzen Chan
 <footer>
   <script src = "js/tools.js"></script>
   <script src = "js/radDist.js"></script>
+  <script src = "js/heatmap.js"></script>
 </footer>
 
 </html>
