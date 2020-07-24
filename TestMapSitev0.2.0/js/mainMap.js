@@ -265,7 +265,7 @@ function getIncomeColour(input){
 
 //creating pane for cesnsus information in order to ensure the census information is below the point data. 
 mainMap.createPane('census');
-mainMap.getPane('census').style.zIndex = 300 //point data is at 400
+mainMap.getPane('census').style.zIndex = 225 //point data is at 400
 incomeLayer.addTo(mainMap);
 
 //ADDING LAYERS END
