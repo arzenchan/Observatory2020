@@ -5,9 +5,10 @@ var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 
 //URLS
 var geojson_Food_Offenders   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FoodOffenders.geojson";
-var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FontEau.geojson"
-var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/Income.geojson"
-var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/211.geojson"
+var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FontEau.geojson";
+var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/Income.geojson";
+var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/211.geojson";
+var geojson_Parks              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/GreenSpace.geojson";
 
 //Base tileset using MapBox
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -20,85 +21,71 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mainMap);
 
 //HIDDING/SHOWING LAYERS
-function layerToggle(toToggle, toToggleStyle, divID){//for standard marker layers
-  if(toToggleStyle['shown']){
+function layerToggle(toToggle, divID){//for standard marker layers
+  if(mainMap.hasLayer(toToggle)){
     mainMap.removeLayer(toToggle);
     //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
-    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggleStyle['showColour']+","+toToggleStyle['showColour']+" 10px,"+toToggleStyle['hideColour']+" 10px, "+toToggleStyle['hideColour']+" 20px)";
-    toToggleStyle['shown']=false;
+    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
   }
   else{
     toToggle.addTo(mainMap);
     document.getElementById(divID).style.background = "initial";
-    document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
-    toToggleStyle['shown']=true;
+    document.getElementById(divID).style.backgroundColor = toToggle.showColour;
   }
 }
 
-function choroToggle(toToggle, toToggleStyle, divID, legendID){//for chloropleth layers
-  if(toToggleStyle['shown']){
+function choroToggle(toToggle, divID, legendID){//for chloropleth layers
+  if(mainMap.hasLayer(toToggle)){
     mainMap.removeLayer(toToggle);
     //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
-    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggleStyle['showColour']+","+toToggleStyle['showColour']+" 10px,"+toToggleStyle['hideColour']+" 10px, "+toToggleStyle['hideColour']+" 20px)";
+    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
     document.getElementById(legendID).style.display = "none";
-    toToggleStyle['shown']=false;
-    
   }
   else{
     toToggle.addTo(mainMap);
     document.getElementById(divID).style.background = "initial";
-    document.getElementById(divID).style.backgroundColor = toToggleStyle['showColour'];
+    document.getElementById(divID).style.backgroundColor = toToggle.showColour;
     document.getElementById(legendID).style.display = "block";
-    toToggleStyle['shown']=true;
   }
 }
 
 //LAYER STYLES
 var FoodOffenStyle = {
-    radius: 3,
-    fillColor: "#d92929",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: .8,
-    
-    //custom variables
-    showColour: "#d92929",//colour of the dot and the legend
-    hideColour: "#d68d8d",//colour of the legend when hidden
-    shown: true
+  radius: 3,
+  fillColor: "#d92929",
+  color: "#000",
+  weight: 1,
+  opacity: 1,
+  fillOpacity: .8,
 };
 var FontEauStyle = {
-    radius: 3,
-    fillColor: "#3975c4",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: .8,
-    
-    //custom variables
-    showColour: "#3975c4",
-    hideColour: "#abc1de",
-    shown: true
+  radius: 3,
+  fillColor: "#3975c4",
+  color: "#000",
+  weight: 1,
+  opacity: 1,
+  fillOpacity: .8,
 };
 
 var Serv211Style = {
-    radius: 3,
-    fillColor: "#3abf37",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: .8,
-    
-    //custom variables
-    showColour: "#3abf37",
-    hideColour: "#8dd68e",
-    shown: true
+  radius: 3,
+  fillColor: "#3abf37",
+  color: "#000",
+  weight: 1,
+  opacity: 1,
+  fillOpacity: .8,
 };
 
+var parkStyle = {
+  radius: 3,
+  fillColor: "#339966",
+  color: "#339966",
+  weight: 1,
+  opacity: .8,
+  fillOpacity: .5,
+}
+
 var IncomeTogStyle = {
-    showColour: "#666666",
-    hideColour: "#aaaaaa",
-    shown: true
 }
 
 function incomeStyle(feature){
@@ -206,6 +193,32 @@ function onEachFeature_211(feature, layer) {
 }
 serv211Layer.addTo(mainMap);
 
+//Adding Park Layer
+console.log("Adding Park Layer");
+var parkLayer = L.geoJson.ajax(geojson_Parks,{
+  style: parkStyle,
+  onEachFeature: onEachFeature_Park, 
+  pane: 'park'
+});
+
+parkLayer.name = 'Parks and Greenspace';
+parkLayer.toolable = false;
+parkLayer.showColour = "#3abf37";
+parkLayer.hideColour = "#8dd68e";
+
+function onEachFeature_Park(feature, layer) {
+  if (feature.properties) {
+    layer.bindPopup(
+      '<h2>Parks and Greenspaces</h2>'+
+      'Name: '            +feature.properties.Nom
+    );
+  }
+}
+parkLayer.addTo(mainMap);
+
+mainMap.createPane('park');
+mainMap.getPane('park').style.zIndex = 295 //point data is at 400
+
 //Adding Income Layer
 console.log("Adding Income Layer");
 var incomeLayer = L.geoJson.ajax(geojson_Income,{
@@ -276,6 +289,7 @@ var layerList = [
   foodOffenLayer,
   fontEauLayer,
   serv211Layer,
+  parkLayer,
   incomeLayer
 ];
 
