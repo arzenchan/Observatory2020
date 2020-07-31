@@ -1,0 +1,30 @@
+  
+  .slider{
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 2px;  
+    border: none;
+    background: #d3d3d3;
+    outline: none;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%; 
+    border: none;
+    background: FireBrick;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: FireBrick;
+    cursor: pointer;
+    border: none;
+  }
+ 

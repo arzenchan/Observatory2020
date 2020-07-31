@@ -1,7 +1,7 @@
 
 
 mainMap.createPane('tools');
-mainMap.getPane('tools').style.zIndex = 250 
+mainMap.getPane('tools').style.zIndex = 300 
 
 var tool = "";//Default tool is "select" which is used to select layers
 toolSelect("select");
