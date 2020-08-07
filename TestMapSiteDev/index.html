@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<meta charset="UTF-8">
 <!--
 Arzen Chan
 2020
@@ -37,7 +37,7 @@ Arzen Chan
   <div id="mainOptions">
     <div id = "layersOptions" class = "optionsPanel">
       <h3>Layers</h3>
-      <p>Click to show/hide</p>
+      <!--p>Click to show/hide</p>
       <div class = "option" id = "foodOffLeg" style="background-color: #d92929">
         <a href="javascript:void(0)" onclick="layerToggle(foodOffenLayer, 'foodOffLeg')">
           Food Offences
@@ -49,7 +49,7 @@ Arzen Chan
         </a>
       </div>
       <div class = "option" id = "211Leg" style="background-color: #3abf37">
-        <a href="javascript:void(0)" onclick="layerToggle(serv211Layer, '211Leg')">
+        <a href="javascript:void(0)"> 
           211 Listed Services
         </a>
       </div>
@@ -58,8 +58,9 @@ Arzen Chan
           Parks and Greenspaces
         </a>
       </div>
-      
-      <p><!--Income Gap--></p>
+    
+
+      <p>--><!--Income Gap--></p>
       
       <div class = "option" id = "incomeLeg" style="background-color: #666666">
         <a href="javascript:void(0)" onclick="choroToggle(incomeLayer, 'incomeLeg', 'incomeLegend')">
@@ -80,7 +81,7 @@ Arzen Chan
     </div>
     
     <!--TOOLS BELOW-->
-    
+
     <div id = "toolsOptions" class = "optionsPanel">
       <h3>Tools</h3>
       <p>Interactive</p>
@@ -159,18 +160,23 @@ Arzen Chan
   </div>
   
   <div id ='mapDiv'>
-    <div id='mainMap' style='height: 800px;'></div> 
+    <div id='mainMap' style='height: 800px;'></div>
+    <script src = 'js/mapDeclarations.js'></script>
+    <script src = 'js/layerLoading.js'></script>
+    <script src = 'js/popupFormats.js'></script>
     <script src = 'js/mainMap.js'></script>
-    <script src = 'js/add211.js'></script>
     <script>choroToggle(incomeLayer, 'incomeLeg', 'incomeLegend')</script> <!-- Default to disabled -->
   </div>
-  
+
+  <button onclick="test()">TESTING</button><!--This button is just for testing random things. Test() can be reassigned to different temporary functions-->
+
   <p>This is a work in progress. The datasets used are largely here for demonstration do not form a set.</p>
   <p>Arzen Chan - 2020</p>
 
 </body>
 
 <footer>
+  <script src = "js/legendGen.js"></script>
   <script src = "js/tools.js"></script>
   <script src = "js/radDist.js"></script>
   <script src = "js/heatmap.js"></script>

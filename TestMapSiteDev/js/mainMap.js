@@ -1,24 +1,12 @@
 
 //Arzen Chan
 //June 5, 2020
-var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 
-//URLS
-var geojson_Food_Offenders   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FoodOffenders.geojson";
-var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/FontEau.geojson";
-var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/Income.geojson";
-var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/211.geojson";
-var geojson_Parks              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/GreenSpace.geojson";
+//LOADING LAYERS
+load211(function(){console.log("211 Data Loaded Successfully")});
+loadPointGeoJSON(foodOffenLayer, foodSecLayer, foodOffendersPopup, function(layer){console.log(layer.name + " Data Loaded Successfully")});
+loadPointGeoJSON(fontEauLayer, greenSpaceLayer, fontEauPopup, function(layer){console.log(layer.name + " Data Loaded Successfully")});
 
-//Base tileset using MapBox
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiYXJ6ZW5jaGFuIiwiYSI6ImNqc2V5eDRnczBud3Y0YXFuZThhdDlucjgifQ.2wvGQ9Ok5wAZSVg5FRP06w'
-}).addTo(mainMap);
 
 //HIDDING/SHOWING LAYERS
 function layerToggle(toToggle, divID){//for standard marker layers
@@ -49,7 +37,6 @@ function choroToggle(toToggle, divID, legendID){//for chloropleth layers
   }
 }
 
-//LAYER STYLES
 var FoodOffenStyle = {
   radius: 3,
   fillColor: "#d92929",
@@ -111,7 +98,7 @@ function incomeStyle(feature){
 }
 
 //ADDING LAYERS START
-//Adding Food Offenders Layer
+/*Adding Food Offenders Layer
 console.log("Adding Food Offender Layer");
 var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
   pointToLayer: function (feature, latlng) {
@@ -140,6 +127,7 @@ function onEachFeature_FoodOffen(feature, layer) {
 
 foodOffenLayer.addTo(mainMap);
 
+
 //Adding Water Fountain Layer
 console.log("Adding Water Fountain Layer");
 var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
@@ -162,36 +150,11 @@ function onEachFeature_FontEau(feature, layer) {
         );
     }
 }
+
 fontEauLayer.addTo(mainMap);
-
-//Adding 211 Layer
-console.log("Adding 211 Layer");
-var serv211Layer = L.geoJson.ajax(geojson_211,{
-  pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, Serv211Style);
-  },
-  onEachFeature: onEachFeature_211
-});
-
-serv211Layer.name = '211 Listed Services';
-serv211Layer.toolable = true;
-serv211Layer.showColour = "#3abf37";
-serv211Layer.hideColour = "#8dd68e";
-
-function onEachFeature_211(feature, layer) {
-    if (feature.properties && feature.properties.description) {
-        layer.bindPopup(
-          '<h2>211 Listed Service</h2>'+
-          'Name: '            +feature.properties.name+
-          '<br>More Infomation to be added'   +
-          '<br>Website: '     +feature.properties.description.AllFields.WebsiteAddress+
-          '<br>Phone Number: '+feature.properties.description.AllFields.Phone1Number+
-          '<br>Hours: '       +feature.properties.description.AllFields.HoursOfOperation+
-          '<br>Eligibility: ' +feature.properties.description.AllFields.Eligibility
-        );
-    }
-}
-serv211Layer.addTo(mainMap);
+*/
+//Whole 211 Layer Adding. I have eliminted this because this needs to be divided up. 
+var serv211Layer;
 
 //Adding Park Layer
 console.log("Adding Park Layer");
@@ -284,7 +247,7 @@ incomeLayer.addTo(mainMap);
 //ADDING LAYERS END
 
 //Lists of data
-
+/*
 var layerList = [
   foodOffenLayer,
   fontEauLayer,
@@ -292,7 +255,7 @@ var layerList = [
   parkLayer,
   incomeLayer
 ];
-
+*/
 //L.control.layers("",overlays).addTo(mainMap)
 //This is the standard and built in version to show/hide layers
 
