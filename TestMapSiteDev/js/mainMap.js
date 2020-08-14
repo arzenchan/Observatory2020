@@ -3,9 +3,19 @@
 //June 5, 2020
 
 //LOADING LAYERS
-load211(function(){console.log("211 Data Loaded Successfully")});
-loadPointGeoJSON(foodOffenLayer, foodSecLayer, foodOffendersPopup, function(layer){console.log(layer.name + " Data Loaded Successfully")});
-loadPointGeoJSON(fontEauLayer, greenSpaceLayer, fontEauPopup, function(layer){console.log(layer.name + " Data Loaded Successfully")});
+load211(function(){
+  console.log("211 Data Loaded Successfully");
+  loadPointGeoJSON(foodOffenLayer, foodSecLayer, foodOffendersPopup, function(layer){
+    console.log(layer.name + " Data Loaded Successfully");
+    loadPointGeoJSON(fontEauLayer, greenSpaceLayer, fontEauPopup, function(layer){
+      console.log(layer.name + " Data Loaded Successfully")
+      
+      //Last load in this cascade should call the generateLegend function
+      generateLegend();
+    });
+  });
+});
+
 
 
 //HIDDING/SHOWING LAYERS
@@ -98,65 +108,10 @@ function incomeStyle(feature){
 }
 
 //ADDING LAYERS START
-/*Adding Food Offenders Layer
-console.log("Adding Food Offender Layer");
-var foodOffenLayer = L.geoJson.ajax(geojson_Food_Offenders,{
-  pointToLayer: function (feature, latlng) {
-    return L.circleMarker(latlng, FoodOffenStyle);
-  },
-  onEachFeature: onEachFeature_FoodOffen
-});
-
-//adding custom keys
-foodOffenLayer.name = 'Food Offenders';
-foodOffenLayer.toolable = true;//for if this layer should be added to tool menus
-foodOffenLayer.showColour= "#d92929";//colour of the dot and the legend
-foodOffenLayer.hideColour= "#d68d8d";//colour of the legend when hidden
-
-function onEachFeature_FoodOffen(feature, layer) {
-    if (feature.properties && feature.properties.description) {
-        layer.bindPopup(
-        '<h2>Food Inspection Violation</h2>'+
-        'Établissement: '+feature.properties.etablissement+
-        '<br>Propriétaire: '+feature.properties.proprietaire+
-        '<br>Adresse: '+feature.properties.adresse+
-        '<br>Catégorie: '+feature.properties.categorie+
-        '<br>Description: '+feature.properties.description);
-    }
-}
-
-foodOffenLayer.addTo(mainMap);
-
-
-//Adding Water Fountain Layer
-console.log("Adding Water Fountain Layer");
-var fontEauLayer = L.geoJson.ajax(geojson_Water_Fountain,{
-  pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, FontEauStyle);
-  },
-  onEachFeature: onEachFeature_FontEau
-});
-
-fontEauLayer.name = 'Water Fountains';
-fontEauLayer.toolable = true;
-fontEauLayer.showColour = "#3975c4";
-fontEauLayer.hideColour = "#abc1de";
-
-function onEachFeature_FontEau(feature, layer) {
-    if (feature.properties && feature.properties.Nom_parc_lieu) {
-        layer.bindPopup(
-          '<h2>Water Fountain</h2>'+
-          'Park: '+feature.properties.Nom_parc_lieu
-        );
-    }
-}
-
-fontEauLayer.addTo(mainMap);
-*/
-//Whole 211 Layer Adding. I have eliminted this because this needs to be divided up. 
 var serv211Layer;
 
 //Adding Park Layer
+//THIS NEEDS TO BE MOVED.
 console.log("Adding Park Layer");
 var parkLayer = L.geoJson.ajax(geojson_Parks,{
   style: parkStyle,
@@ -177,7 +132,7 @@ function onEachFeature_Park(feature, layer) {
     );
   }
 }
-parkLayer.addTo(mainMap);
+greenSpaceLayer.addLayer(parkLayer);//TEMP
 
 mainMap.createPane('park');
 mainMap.getPane('park').style.zIndex = 295 //point data is at 400
@@ -192,6 +147,7 @@ var incomeLayer = L.geoJson.ajax(geojson_Income,{
 
 incomeLayer.name = 'Income';
 incomeLayer.toolable = false;
+incomeLayer.type = "choro";
 incomeLayer.showColour = "#666666";
 incomeLayer.hideColour = "#aaaaaa";
 
@@ -217,6 +173,7 @@ function getIncomeColour(input){
   else{
     i = parseInt((input/90000)*6);
     //https://colorbrewer2.org/
+
     return  i == 0 ? '#ffffff'://0-15k
             i == 1 ? '#cccccc'://15k-30k
             i == 2 ? '#999999'://30k-45k

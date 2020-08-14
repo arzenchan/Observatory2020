@@ -33,10 +33,10 @@ function load211(_callback){
 }
 
 //function for loading a standard geojson point data file. 
+//NOTE: all layers should be placed in a parent layer. No layers should be added directly to the map.
 function loadPointGeoJSON(layerLoad, layerParent, popupFunc, _callback){
     //Adding Food Offenders Layer
     console.log("Adding "+layerLoad.name);
-    console.log(layerLoad.url);
 
     var geoJsonLayer = L.geoJson.ajax(layerLoad.url,{
         pointToLayer: function (feature, latlng) {
@@ -48,9 +48,8 @@ function loadPointGeoJSON(layerLoad, layerParent, popupFunc, _callback){
     function onEachFeature_Load(feature, layer) {
         popupFunc(feature, layer);
     }
-    console.log(geoJsonLayer);
     geoJsonLayer.on('data:loaded', function() {
-        layerLoad = Object.assign(geoJsonLayer, layerLoad);
+        layerLoad = Object.assign(geoJsonLayer, layerLoad);//I think this is causing a problem by creating a new object rather than assigning it to the existing object. So the variable doesn't poing to this. 
         layerLoad.setStyle({fillColor: layerLoad.showColour});
         if (layerParent == "None"){
             allLayers.addLayer(layerLoad)

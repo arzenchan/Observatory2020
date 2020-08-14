@@ -6,6 +6,8 @@ Also, this creates a uniform place for future layers to be declared
 Layers are NOT POPULATED in this file. That is done in layerLoading.js
 */
 
+//NOTE: all layers should be placed in a parent layer. No layers should be added directly to the map.
+
 //MAP
 var mainMap = L.map('mainMap').setView([45.556205, -73.711284], 11);
 //Base tileset using MapBox
@@ -44,11 +46,19 @@ allLayers.addTo(mainMap);
 var foodSecLayer = L.featureGroup({});//layer group that holds the food security layers
 foodSecLayer.name = 'Food Security';
 foodSecLayer.legName = foodSecLayer.name;
+foodSecLayer.varName = 'foodSecLayer';
+foodSecLayer.showColour = "#a23f3f";
+foodSecLayer.hideColour = "#c27575";
+foodSecLayer.parent = true;
 allLayers.addLayer(foodSecLayer);
 
 var greenSpaceLayer = L.featureGroup({});//layer group that holds the green space layers
 greenSpaceLayer.name = 'Green Space';
 greenSpaceLayer.legName = greenSpaceLayer.name;
+greenSpaceLayer.varName = 'greenSpaceLayer';
+greenSpaceLayer.showColour = "#338a36";
+greenSpaceLayer.hideColour = "#55b958";
+greenSpaceLayer.parent = true;
 allLayers.addLayer(greenSpaceLayer);
 
 //--------------------
@@ -59,6 +69,7 @@ var foodEmerLayer = L.featureGroup({});
 foodEmerLayer.code = "BD-1800";
 foodEmerLayer.name = 'Food: Emergency Food';
 foodEmerLayer.legName = 'Emergency Food';
+foodEmerLayer.varName = 'foodEmerLayer';
 foodEmerLayer.toolable = true;
 foodEmerLayer.showColour = "#fba209";
 foodEmerLayer.hideColour = "#f7ce87";
@@ -68,6 +79,7 @@ var foodColcLayer = L.featureGroup({});
 foodColcLayer.code = "BD-1875";
 foodColcLayer.name = 'Food: Food Collection and Storage';
 foodColcLayer.legName = 'Collection & Storage';
+foodColcLayer.varName = 'foodColcLayer';
 foodColcLayer.toolable = true;
 foodColcLayer.showColour = "#fbfb13";
 foodColcLayer.hideColour = "#fcfc9c";
@@ -77,6 +89,7 @@ var foodOutlLayer = L.featureGroup({});
 foodOutlLayer.code = "BD-2400"
 foodOutlLayer.name = 'Food: Food Outlets';
 foodOutlLayer.legName = 'Food Outlets';
+foodOutlLayer.varName = 'foodOutlLayer';
 foodOutlLayer.toolable = true;
 foodOutlLayer.showColour = "#c50277";
 foodOutlLayer.hideColour = "#e392c2";
@@ -86,6 +99,7 @@ var foodProdLayer = L.featureGroup({});
 foodProdLayer.code = "BD-2600";
 foodProdLayer.name = 'Food: Food Production';
 foodProdLayer.legName = 'Food Production';
+foodProdLayer.varName = 'foodProdLayer';
 foodProdLayer.toolable = true;
 foodProdLayer.showColour = "#8738f5";
 foodProdLayer.hideColour = "#c1a1ed";
@@ -95,6 +109,7 @@ var foodMealLayer = L.featureGroup({});
 foodMealLayer.code = "BD-5000";
 foodMealLayer.name = 'Food: Meals';
 foodMealLayer.legName = 'Meals';
+foodMealLayer.varName = 'foodMealLayer';
 foodMealLayer.toolable = true;
 foodMealLayer.showColour = "#8e632e";
 foodMealLayer.hideColour = "#b79771";
@@ -103,6 +118,8 @@ foodSecLayer.addLayer(foodMealLayer);
 //Food offenders layer
 var foodOffenLayer = {};
 foodOffenLayer.name = 'Food Offenders';
+foodOffenLayer.legName = foodOffenLayer.name;
+foodOffenLayer.varName = 'foodOffenLayer';
 foodOffenLayer.toolable = true;//for if this layer should be added to tool menus
 foodOffenLayer.showColour= "#d92929";//colour of the dot and the legend
 foodOffenLayer.hideColour= "#d68d8d";//colour of the legend when hidden
@@ -115,6 +132,8 @@ foodOffenLayer.url = geojson_Food_Offenders;
 //Water Fountains layer
 var fontEauLayer = {};
 fontEauLayer.name = 'Water Fountains';
+fontEauLayer.legName = fontEauLayer.name;
+fontEauLayer.varName = 'fontEauLayer';
 fontEauLayer.toolable = true;
 fontEauLayer.showColour = "#3975c4";
 fontEauLayer.hideColour = "#abc1de";
