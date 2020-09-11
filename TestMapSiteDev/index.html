@@ -23,6 +23,8 @@ Arzen Chan
    <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
 
    <script src="js/miscScripts.js"></script>
+  
+   <script src="js/jscolor.js"></script>
 
    <link rel="stylesheet" href="style/mainStyle.css">
    <link rel="stylesheet" href="style/slider.css">
@@ -145,9 +147,14 @@ Arzen Chan
     <script src = 'js/mainMap.js'></script>
     <script>choroToggle(incomeLayer, 'incomeLeg', 'incomeLegend')</script> <!-- Default to disabled -->
   </div>
-
-  <button onclick="test()">TESTING</button><!--This button is just for testing random things. Test() can be reassigned to different temporary functions-->
-
+  
+  <div id="endTest">
+    <button onclick="test()">TESTING</button><!--This button is just for testing random things. Test() can be reassigned to different temporary functions-->
+    <button data-jscolor="{value:'000000'}"></button>
+    <script>
+      
+    </script>
+  </div>
   <p>This is a work in progress. The datasets used are largely here for demonstration do not form a set.</p>
   <p>Arzen Chan - 2020</p>
 

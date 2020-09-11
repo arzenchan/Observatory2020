@@ -8,6 +8,16 @@ toolSelect("select");
 
 var clickLatLng;
 
+//LAYER DERIVED TOOLS
+function recolourLegend(layerIn){
+  $("#"+layerIn.varName+"Legend").css('background-color', $("#"+layerIn.varName+"ColIn").val());
+  recolourLayer(layerIn);
+}
+function recolourLayer(layerIn){
+  layerIn.setStyle({fillColor: $("#"+layerIn.varName+"ColIn").val()});
+}
+
+//INDEPENDANT TOOLS
 function toolSelect(toolIn){//used to toggle which tool is being selected
   if (tool != "select" || toolIn == "select"){
     tool = "select";//change back to select when the button is clicked again
@@ -103,3 +113,4 @@ mainMap.on('click', function(e) {
   //==more clicky tools go here==
 
 });
+

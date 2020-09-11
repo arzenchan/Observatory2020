@@ -16,6 +16,7 @@ function generateLegend(){
             $("#layersOptions").append(""+legendButtonGen(layer));
         });
     });
+    jscolor.install();
 }
 
 function legendButtonGen(layer){
@@ -24,23 +25,35 @@ function legendButtonGen(layer){
     if (layer.parent == true){
         layout =
         "<div class = \"option\" "+
-        "id = \""+layer.legName+"Legend\" "+
+        "id = \""+layer.varName+"Legend\" "+
         "style = \"background-color: "+layer.showColour+"\">"+
-        "<a href=\"javascript:void(0)\" onclick=\"layerToggle("+layer.varName+", '"+layer.legName+"Legend')\">"+
+        "<input type=\"checkbox\" id=\""+layer.varName+"Box\" checked=\"checked\" onclick=\"layerToggle("+layer.varName+", '"+layer.varName+"Legend')\"></input>"+
+        "<span class \"legend_name\">"+
             layer.legName+
-        "</a></div>";
+        "</span><span class = \"legend_icons\">   <img src = \"img/colour_reset.png\" height=\"15px\">  <img src = \"img/colour_tool.png\" height=\"18px\"></img></span></div>";
     }
     else{
         layout =
         "<div class = \"option\" "+
-        "id = \""+layer.legName+"Legend\" "+
-        "style = \"background-color: "+layer.showColour+"; width: 80%\">"+
-        "<a href=\"javascript:void(0)\" onclick=\"layerToggle("+layer.varName+", '"+layer.legName+"Legend')\">"+
+        "id = \""+layer.varName+"Legend\" "+
+        "style = \"background-color: "+layer.showColour+"; width: 80%\">"+//The 80% width indents. It's on the wrong side right now though
+        "<input type=\"checkbox\" id=\""+layer.varName+"Box\" checked=\"checked\" onclick=\"layerToggle("+layer.varName+", '"+layer.varName+"Legend')\"></input>"+
+        "<span class \"legend_name\">"+
             layer.legName+
-        "</a></div>";
+            "</span><span class = \"legend_icons\">"+
+            "<img src = \"img/colour_tool.png\" height=\"18px\" data-jscolor=\"{"+
+                "onInput:'recolourLegend("+layer.varName+")', "+
+                "onChange:'recolourLayer("+layer.varName+")', "+
+                "valueElement:'#"+layer.varName+"ColIn'"+
+                "}\"></img>"+
+            "<input id=\""+layer.varName+"ColIn\" value=\""+layer.showColour+"\" name=\"colour"+layer.varName+"\" type=\"hidden\"></input>"+
+            "</span></div>";
+            //"</span><span class = \"legend_icons\"> <img src = \"img/colour_tool.png\" height=\"18px\" value = \"2CAFFE\" data-jscolor=\"{position:'right'}\"></img></span></div>";
     }
     return layout
 }
+
+
 
 /*
 Old HTML for the buttons. This is useful as a template

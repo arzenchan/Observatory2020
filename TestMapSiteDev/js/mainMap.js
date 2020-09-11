@@ -23,12 +23,14 @@ function layerToggle(toToggle, divID){//for standard marker layers
   if(mainMap.hasLayer(toToggle)){
     mainMap.removeLayer(toToggle);
     //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
-    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
+    //document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
+    document.getElementById(divID).style.opacity = ".5";
   }
   else{
     toToggle.addTo(mainMap);
-    document.getElementById(divID).style.background = "initial";
-    document.getElementById(divID).style.backgroundColor = toToggle.showColour;
+    //document.getElementById(divID).style.background = "initial";
+    //document.getElementById(divID).style.backgroundColor = toToggle.showColour;
+    document.getElementById(divID).style.opacity = "1";
   }
 }
 
@@ -36,13 +38,15 @@ function choroToggle(toToggle, divID, legendID){//for chloropleth layers
   if(mainMap.hasLayer(toToggle)){
     mainMap.removeLayer(toToggle);
     //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
-    document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
+    //document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
+    document.getElementById(divID).style.opacity = ".5";
     document.getElementById(legendID).style.display = "none";
   }
   else{
     toToggle.addTo(mainMap);
-    document.getElementById(divID).style.background = "initial";
+    //document.getElementById(divID).style.background = "initial";
     document.getElementById(divID).style.backgroundColor = toToggle.showColour;
+    document.getElementById(divID).style.opacity = "1";
     document.getElementById(legendID).style.display = "block";
   }
 }
@@ -120,9 +124,12 @@ var parkLayer = L.geoJson.ajax(geojson_Parks,{
 });
 
 parkLayer.name = 'Parks and Greenspace';
+parkLayer.legName = 'Parks & Greenspaces';
+parkLayer.varName = 'parkLayer';
 parkLayer.toolable = false;
 parkLayer.showColour = "#3abf37";
 parkLayer.hideColour = "#8dd68e";
+
 
 function onEachFeature_Park(feature, layer) {
   if (feature.properties) {

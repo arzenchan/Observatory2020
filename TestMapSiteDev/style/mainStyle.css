@@ -30,8 +30,10 @@ h3{
 }
 
 .option{
-  padding: 3px;
+  padding: 5px;
   display: block;
+  margin: 1px;
+  border-radius: 3px;
 }
 .option a{
   color: white;
@@ -60,5 +62,21 @@ h3{
 
 #incomeLegend{
   display: block;
+}
+
+.arrowUp{
+  -webkit-transform:rotate(180deg); /* Chrome, Safari, Opera */
+  transform:rotate(180deg); /* Standard syntax */
+}
+.arrowDown{
+  /*Arrow is already down*/
+}
+.arrowLeft{
+  -webkit-transform:rotate(90deg); /* Chrome, Safari, Opera */
+  transform:rotate(90deg); /* Standard syntax */
+}
+.arrowRight{
+  -webkit-transform:rotate(270deg); /* Chrome, Safari, Opera */
+  transform:rotate(270deg); /* Standard syntax */
 }
 
