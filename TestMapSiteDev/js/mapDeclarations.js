@@ -116,7 +116,12 @@ foodMealLayer.hideColour = "#b79771";
 foodSecLayer.addLayer(foodMealLayer);
 
 //Food offenders layer
-var foodOffenLayer = {};
+//Individual addition
+var foodOffenLayer = L.geoJson.ajax({
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, pointDataStyle);
+  },
+});
 foodOffenLayer.name = 'Food Offenders';
 foodOffenLayer.legName = foodOffenLayer.name;
 foodOffenLayer.varName = 'foodOffenLayer';
@@ -130,7 +135,12 @@ foodOffenLayer.url = geojson_Food_Offenders;
 //----------------
 
 //Water Fountains layer
-var fontEauLayer = {};
+//Individual addition
+var fontEauLayer = L.geoJson.ajax({
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, pointDataStyle);
+  },
+});
 fontEauLayer.name = 'Water Fountains';
 fontEauLayer.legName = fontEauLayer.name;
 fontEauLayer.varName = 'fontEauLayer';

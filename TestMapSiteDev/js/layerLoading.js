@@ -37,29 +37,27 @@ function load211(_callback){
 function loadPointGeoJSON(layerLoad, layerParent, popupFunc, _callback){
     //Adding Food Offenders Layer
     console.log("Adding "+layerLoad.name);
-
-    var geoJsonLayer = L.geoJson.ajax(layerLoad.url,{
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, pointDataStyle);
-        },
-        onEachFeature: onEachFeature_Load
-    });
-
-    function onEachFeature_Load(feature, layer) {
-        popupFunc(feature, layer);
-    }
-    geoJsonLayer.on('data:loaded', function() {
-        layerLoad = Object.assign(geoJsonLayer, layerLoad);//I think this is causing a problem by creating a new object rather than assigning it to the existing object. So the variable doesn't poing to this. 
-        layerLoad.setStyle({fillColor: layerLoad.showColour});
+    
+    layerLoad.addUrl(layerLoad.url);
+    
+    layerLoad.on('data:loaded', function() {
         if (layerParent == "None"){
             allLayers.addLayer(layerLoad)
         }
         else{
             layerParent.addLayer(layerLoad);
         }
+
+        layerLoad.eachLayer(function (layer) { 
+            popupFunc(layer.feature, layer);
+        });
+
+        layerLoad.setStyle({fillColor: layerLoad.showColour});
+
         _callback(layerLoad);
     });
 }
+
 
 
 

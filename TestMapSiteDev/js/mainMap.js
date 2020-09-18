@@ -16,8 +16,6 @@ load211(function(){
   });
 });
 
-
-
 //HIDDING/SHOWING LAYERS
 function layerToggle(toToggle, divID){//for standard marker layers
   if(mainMap.hasLayer(toToggle)){
@@ -49,6 +47,12 @@ function choroToggle(toToggle, divID, legendID){//for chloropleth layers
     document.getElementById(divID).style.opacity = "1";
     document.getElementById(legendID).style.display = "block";
   }
+}
+
+//COLLAPSING IN THE LEGEND
+function collapseSubLegend(layer){
+  console.log(layer.varName+"SubLegend");
+  $("#"+layer.varName+"SubLegend").slideToggle();
 }
 
 var FoodOffenStyle = {
