@@ -26,6 +26,7 @@ var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/Test
 var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/Income.geojson";
 var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/211.geojson";
 var geojson_Parks            = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/GreenSpace.geojson";
+var geojson_Urban_Agri       = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/UrbanAgri.geojson";
 
 //LAYER STYLES
 var pointDataStyle = {
@@ -129,6 +130,21 @@ foodOffenLayer.toolable = true;//for if this layer should be added to tool menus
 foodOffenLayer.showColour= "#d92929";//colour of the dot and the legend
 foodOffenLayer.hideColour= "#d68d8d";//colour of the legend when hidden
 foodOffenLayer.url = geojson_Food_Offenders;
+
+//Urban Agriculture layer
+//Individual addition
+var urbanAgriLayer = L.geoJson.ajax({
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, pointDataStyle);
+  },
+});
+urbanAgriLayer.name = 'Urban Agriculture';
+urbanAgriLayer.legName = urbanAgriLayer.name;
+urbanAgriLayer.varName = 'urbanAgriLayer';
+urbanAgriLayer.toolable = true;//for if this layer should be added to tool menus
+urbanAgriLayer.showColour= "#a7d661";//colour of the dot and the legend
+urbanAgriLayer.hideColour= "#dfedca";//colour of the legend when hidden
+urbanAgriLayer.url = geojson_Urban_Agri;
 
 //----------------
 //GREESPACE LAYERS

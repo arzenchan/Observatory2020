@@ -5,13 +5,16 @@
 //LOADING LAYERS
 load211(function(){
   console.log("211 Data Loaded Successfully");
+  
+  //Last load in this cascade should call the generateLegend function
   loadPointGeoJSON(foodOffenLayer, foodSecLayer, foodOffendersPopup, function(layer){
     console.log(layer.name + " Data Loaded Successfully");
     loadPointGeoJSON(fontEauLayer, greenSpaceLayer, fontEauPopup, function(layer){
       console.log(layer.name + " Data Loaded Successfully")
-      
-      //Last load in this cascade should call the generateLegend function
-      generateLegend();
+      loadPointGeoJSON(urbanAgriLayer, foodSecLayer, urbanAgriPopup, function(layer){
+        console.log(layer.name + " Data Loaded Successfully")
+        generateLegend();
+      });
     });
   });
 });

@@ -25,3 +25,13 @@ function fontEauPopup(feature, layer) {
         );
     }
 }
+
+function urbanAgriPopup(feature, layer) {
+    if (feature.properties && feature.properties.Nom_parc_lieu) {
+        layer.bindPopup(
+          '<h2>Urban Agriculture</h2>'+
+          'Responses are listed as multiple choiceanswers to questions. <br>'+
+          'These need to be labelled.'
+        );
+    }
+}
