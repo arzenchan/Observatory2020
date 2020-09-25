@@ -5,11 +5,29 @@ This file generates the legend from the layers that are on the map.
 //NOTE: all layers should be placed in a parent layer. No layers should be added directly to the map. 
 */
 
+/*
+Arzen Chan
+
+This file generates the legend from the layers that are on the map. 
+//NOTE: all layers should be placed in a parent layer. No layers should be added directly to the map. 
+*/
+
 function generateLegend(){
     console.log("Generating legend");
     allLayers.eachLayer(function (layerGroup) { 
         console.log("Parent Layer: "+layerGroup.name);
         $("#layersOptions").append(""+legendButtonGen(layerGroup));
+
+        //For sortable lists: https://jqueryui.com/sortable/
+        $( function() {
+            $("#"+layerGroup.varName+"SubLegend").sortable({
+                stop: function(event, ui) {
+                    //Here we can change the value
+                    //ui.item.index(); returns the value of the item that was just dragged. 
+                }
+            });
+            $("#"+layerGroup.varName+"SubLegend").disableSelection();
+        } );
 
         layerGroup.eachLayer(function (layer){
             console.log("Layer: "+layerGroup.name+" - "+layer.name);
@@ -27,34 +45,39 @@ function legendButtonGen(layer){
         "<div class = \"option\" "+
         "id = \""+layer.varName+"Legend\" "+
         "style = \"background-color: "+layer.showColour+"\">"+
-        "<input type=\"checkbox\" id=\""+layer.varName+"Box\" checked=\"checked\" onclick=\"layerToggle("+layer.varName+", '"+layer.varName+"Legend')\"></input>"+
+        "<input type=\"checkbox\" id=\""+layer.varName+"Box\" checked=\"checked\" onclick=\"layerToggle("+layer.varName+", '"+layer.varName+"Legend', true)\"></input>"+
         "<span class \"legend_name\"><span id='"+layer.varName+"Collapse' onclick = \"collapseSubLegend("+layer.varName+")\"><img src = \"img/arrow.png\" height=\"15px\"> </span>"+
             layer.legName+
-        "</span><span class = \"legend_icons\">   <img src = \"img/colour_reset.png\" height=\"15px\">  <img src = \"img/colour_tool.png\" height=\"18px\"></img></span></div>"+
-        "<div id=\""+layer.varName+"SubLegend\"></div>";
+        "</span><span class = \"legend_icons\">   <img src = \"img/colour_reset.png\" height=\"15px\" onclick = \"resetGroupColour("+layer.varName+")\">   "+
+        "<img src = \"img/colour_tool.png\" id=\""+layer.varName+"ColBut\" height=\"18px\" data-jscolor=\"{"+
+                "onInput:'changeGroupColour("+layer.varName+")', "+
+                "valueElement:'#"+layer.varName+"ColIn'"+
+                "}\"></img>"+
+            "<input id=\""+layer.varName+"ColIn\" value=\""+layer.showColour+"\" name=\"colour"+layer.varName+"\" type=\"hidden\"></input>"+
+            "</img></span></div>"+
+        "<ul id=\""+layer.varName+"SubLegend\"></ul>";
+        
     }
     else{
         layout =
-        "<div class = \"option\" "+
+        "<li class = \"option\" "+
         "id = \""+layer.varName+"Legend\" "+
         "style = \"background-color: "+layer.showColour+"; width: 80%\">"+//The 80% width indents. It's on the wrong side right now though
         "<input type=\"checkbox\" id=\""+layer.varName+"Box\" checked=\"checked\" onclick=\"layerToggle("+layer.varName+", '"+layer.varName+"Legend')\"></input>"+
         "<span class \"legend_name\">"+
             layer.legName+
             "</span><span class = \"legend_icons\">"+
-            "<img src = \"img/colour_tool.png\" height=\"18px\" data-jscolor=\"{"+
+            "<img src = \"img/colour_tool.png\" id=\""+layer.varName+"ColBut\" height=\"18px\" data-jscolor=\"{"+
                 "onInput:'recolourLegend("+layer.varName+")', "+
                 "onChange:'recolourLayer("+layer.varName+")', "+
                 "valueElement:'#"+layer.varName+"ColIn'"+
                 "}\"></img>"+
             "<input id=\""+layer.varName+"ColIn\" value=\""+layer.showColour+"\" name=\"colour"+layer.varName+"\" type=\"hidden\"></input>"+
-            "</span></div>";
+            "</span></li>";
             //"</span><span class = \"legend_icons\"> <img src = \"img/colour_tool.png\" height=\"18px\" value = \"2CAFFE\" data-jscolor=\"{position:'right'}\"></img></span></div>";
     }
     return layout
 }
-
-
 
 /*
 Old HTML for the legend buttons. This is useful as a template

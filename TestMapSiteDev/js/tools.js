@@ -8,16 +8,99 @@ toolSelect("select");
 
 var clickLatLng;
 
-//LAYER DERIVED TOOLS
-function recolourLegend(layerIn){
-  $("#"+layerIn.varName+"Legend").css('background-color', $("#"+layerIn.varName+"ColIn").val());
-  recolourLayer(layerIn);
+function test(){
+  $("ul").removeClass("ui-sortable");
+  $("li").removeClass("ui-sortable-handle");
+}
+
+//===LAYER DERIVED TOOLS===
+//Hiding/showing layers
+function layerToggle(toToggle, divID, parent){//for standard marker layers
+  if(mainMap.hasLayer(toToggle)){
+    mainMap.removeLayer(toToggle);
+    if (parent){//if the layer being toggled is a parent, then also affect the checkboxes of its children
+      toToggle.eachLayer(function (layer){
+        $("#"+layer.varName+"Box").prop("checked", false);
+        $("#"+layer.varName+"Legend").css("opacity", ".5");
+      });
+    }
+    //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
+    //document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
+    $("#"+divID).css("opacity", ".5");
+  }
+  else{
+    toToggle.addTo(mainMap);
+    //document.getElementById(divID).style.background = "initial";
+    //document.getElementById(divID).style.backgroundColor = toToggle.showColour;
+    if (parent){//if the layer being toggled is a parent, then also affect the checkboxes of its children
+      toToggle.eachLayer(function (layer){
+        $("#"+layer.varName+"Box").prop("checked", true);
+        $("#"+layer.varName+"Legend").css("opacity", "1");
+      });
+    }
+    $("#"+divID).css("opacity", "1");
+  }
+}
+function choroToggle(toToggle, divID, legendID){//for chloropleth layers
+  if(mainMap.hasLayer(toToggle)){
+    mainMap.removeLayer(toToggle);
+    //document.getElementById(divID).style.backgroundColor = toToggleStyle['hideColour'];
+    //document.getElementById(divID).style.background = "repeating-linear-gradient(45deg, "+toToggle.showColour+","+toToggle.showColour+" 10px,"+toToggle.hideColour+" 10px, "+toToggle.hideColour+" 20px)";
+    document.getElementById(divID).style.opacity = ".5";
+    document.getElementById(legendID).style.display = "none";
+  }
+  else{
+    toToggle.addTo(mainMap);
+    //document.getElementById(divID).style.background = "initial";
+    document.getElementById(divID).style.backgroundColor = toToggle.showColour;
+    document.getElementById(divID).style.opacity = "1";
+    document.getElementById(legendID).style.display = "block";
+  }
+}
+
+//Collapsing in the legend
+function collapseSubLegend(layer){
+  console.log(layer.varName+"SubLegend");
+  $("#"+layer.varName+"SubLegend").slideToggle();
+}
+
+//Recolouring
+function recolourLegend(layerIn, parentCol){
+  if (parentCol===undefined){//no parent colour, reset based on independant colour
+    $("#"+layerIn.varName+"Legend").css('background-color', $("#"+layerIn.varName+"ColIn").val());
+    recolourLayer(layerIn);
+  }
+  else{//change layer to parent colour
+    $("#"+layerIn.varName+"Legend").css('background-color', parentCol);
+    //no need to call the recolouring of the layer as the sub layers will already be recoloured
+  }
 }
 function recolourLayer(layerIn){
   layerIn.setStyle({fillColor: $("#"+layerIn.varName+"ColIn").val()});
 }
+function changeGroupColour(parentLayer){
+  recolourLegend(parentLayer);
 
-//INDEPENDANT TOOLS
+  parentCol = $("#"+parentLayer.varName+"ColIn").val();
+  parentLayer.eachLayer(function (layer){
+    recolourLegend(layer, parentCol);
+    $("#"+layer.varName+"ColBut").css("background-image", "none");
+  });
+}
+
+function resetGroupColour(parentLayer){
+  //This function resets the colours of the sublayers to their original defaults
+  parentLayer.eachLayer(function (layer){
+    $("#"+layer.varName+"ColIn").val(layer.showColour);
+    recolourLegend(layer);
+
+    //This is a work around. The better solution would be to have jscolor not change the background image of the paintbucket
+    //Alternately, I'm thinking of removing the paintbucket and replacing it with a circle of the colour and use that as the recolout button. See what happens. 
+    $("#"+layer.varName+"ColBut").css("background-image", "none");
+  });
+}
+
+//===INDEPENDANT TOOLS===
 function toolSelect(toolIn){//used to toggle which tool is being selected
   if (tool != "select" || toolIn == "select"){
     tool = "select";//change back to select when the button is clicked again

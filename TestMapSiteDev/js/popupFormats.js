@@ -40,7 +40,12 @@ function popup211(feature, layer, layerGroup) {
     if(feature.properties.field8.includes(layerGroup.code)){
         layer.bindPopup(
             '<h2>'+layerGroup.name+'</h2>'+
-            'Name: '            +feature.properties.name
+            'Name: '            +feature.properties.name+
+            '<br>Eligibility: '     +feature.properties.description.AllFields.Eligibility+
+            '<br>Hours: '           +feature.properties.description.AllFields.HoursOfOperation+
+            '<br>Phone:'            +feature.properties.description.AllFields.Phone1Number+
+            '<br>Website: '         +feature.properties.description.AllFields.WebsiteAddress+
+            '<br>Taxonomy Codes: '  +feature.properties.field8+' <a href="https://211taxonomy.org/">What\'s this?</a>'
             );
         layerGroup.addLayer(layer);
     }
