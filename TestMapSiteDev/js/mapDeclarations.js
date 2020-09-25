@@ -26,7 +26,7 @@ var geojson_Water_Fountain   = "https://arzenchan.github.io/Observatory2020/Test
 var geojson_Income           = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/Income.geojson";
 var geojson_211              = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/211.geojson";
 var geojson_Parks            = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/GreenSpace.geojson";
-var geojson_Urban_Agri       = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/UrbanAgri.geojson";
+var geojson_Urban_Agri       = "https://arzenchan.github.io/Observatory2020/data/UrbanAgri.geojson";
 
 //LAYER STYLES
 var pointDataStyle = {

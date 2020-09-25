@@ -27,11 +27,21 @@ function fontEauPopup(feature, layer) {
 }
 
 function urbanAgriPopup(feature, layer) {
-    if (feature.properties && feature.properties.Nom_parc_lieu) {
+    if (feature.properties) {
         layer.bindPopup(
           '<h2>Urban Agriculture</h2>'+
-          'Responses are listed as multiple choiceanswers to questions. <br>'+
+          'Responses are listed as multiple choice answers to questions. <br>'+
           'These need to be labelled.'
         );
+    }
+}
+
+function popup211(feature, layer, layerGroup) {
+    if(feature.properties.field8.includes(layerGroup.code)){
+        layer.bindPopup(
+            '<h2>'+layerGroup.name+'</h2>'+
+            'Name: '            +feature.properties.name
+            );
+        layerGroup.addLayer(layer);
     }
 }

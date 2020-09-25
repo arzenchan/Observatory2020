@@ -12,13 +12,7 @@ function load211(_callback){
     //This function takes the layer that's in the geoJson and puts it in the appropriate grouplayer
     function sort211Layers(feature, layer){
         foodSecLayer.eachLayer(function (layerGroup) { 
-            if(feature.properties.field8.includes(layerGroup.code)){
-                layer.bindPopup(
-                    '<h2>'+layerGroup.name+'</h2>'+
-                    'Name: '            +feature.properties.name
-                    );
-                layerGroup.addLayer(layer);
-            }
+            popup211(feature, layer, layerGroup);
         });
     }
 
