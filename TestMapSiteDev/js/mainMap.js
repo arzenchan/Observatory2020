@@ -19,6 +19,8 @@ load211(function(){
   });
 });
 
+allLayers.addLayer(L.leafletGeotiff(raster_test_url));
+
 var FoodOffenStyle = {
   radius: 3,
   fillColor: "#d92929",

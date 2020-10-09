@@ -28,6 +28,8 @@ var geojson_211              = "https://arzenchan.github.io/Observatory2020/data
 var geojson_Parks            = "https://arzenchan.github.io/Observatory2020/TestMapSitev0.2.0/data/GreenSpace.geojson";
 var geojson_Urban_Agri       = "https://arzenchan.github.io/Observatory2020/data/UrbanAgri.geojson";
 
+var raster_test_url          = "https://arzenchan.github.io/Observatory2020/data/crossRasters/211DenxIncome.tif";
+
 //LAYER STYLES
 var pointDataStyle = {
     radius: 3,
@@ -145,6 +147,7 @@ urbanAgriLayer.toolable = true;//for if this layer should be added to tool menus
 urbanAgriLayer.showColour= "#a7d661";//colour of the dot and the legend
 urbanAgriLayer.hideColour= "#dfedca";//colour of the legend when hidden
 urbanAgriLayer.url = geojson_Urban_Agri;
+
 
 //----------------
 //GREESPACE LAYERS
