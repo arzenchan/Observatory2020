@@ -1,0 +1,91 @@
+body{
+  font-family: Verdana, Arial, sans-serif;
+}
+header{
+  background-color: FireBrick;
+  padding: 1px;
+  padding-left: 31px;
+  color: white;
+}
+h1{
+  font-weight: normal;
+}
+
+h3{
+  font-weight: normal;
+}
+
+#mainOptions{
+  float: right;
+}
+.optionsPanel{
+  padding: 15px;
+  padding-top: 5px;
+  width: 250px;
+  margin: 15px;
+  text-align: center;
+  
+  background-color: #efe9e1;
+  border-radius: 10px;
+}
+
+.option{
+  padding: 5px;
+  display: block;
+  margin: 1px;
+  border-radius: 3px;
+}
+.option a{
+  color: white;
+}
+.chloroLegend{
+  font-size: 10pt;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.ui-sortable{
+
+}
+.ui-sortable-handle{
+  
+}
+.ui-sortable-helper{
+  width: 220px !important;
+}
+
+#mainOptions a{
+  text-decoration: none;
+}
+
+#mainMap{
+  float: none; /* not needed, just for clarification */
+  /* the next props are meant to keep this block independent from the other floated one */
+  width: auto;
+  overflow: hidden;
+}
+
+#incomeLegend{
+  display: block;
+}
+
+.arrowUp{
+  -webkit-transform:rotate(180deg); /* Chrome, Safari, Opera */
+  transform:rotate(180deg); /* Standard syntax */
+}
+.arrowDown{
+  /*Arrow is already down*/
+}
+.arrowLeft{
+  -webkit-transform:rotate(90deg); /* Chrome, Safari, Opera */
+  transform:rotate(90deg); /* Standard syntax */
+}
+.arrowRight{
+  -webkit-transform:rotate(270deg); /* Chrome, Safari, Opera */
+  transform:rotate(270deg); /* Standard syntax */
+}

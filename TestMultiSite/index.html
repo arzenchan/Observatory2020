@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<!--
+Arzen Chan
+2020
+-->
+
+<html>
+<head>
+  <title>Montreal Food Map - WIP Main Page</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- Leaflet JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+  
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
+  
+  <script src="js/leaflet.ajax.min.js"></script>
+  <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+  
+  <!--Raster Tiff Plugin-->
+  <script src="js/leaflet-geotiff/geotiff.js"></script>
+  <script src="https://unpkg.com/plotty@0.2.0/src/plotty.js"></script>
+  <script src="js/leaflet-geotiff/leaflet-geotiff.js"></script>
+  <!-- Load any renderer you need -->
+  <script src="js/leaflet-geotiff/leaflet-geotiff-plotty.js"></script>
+  <script src="js/leaflet-geotiff/leaflet-geotiff-vector.js"></script>
+
+  <script src="js/jscolor.js"></script>
+  <script src="js/miscScripts.js"></script>
+
+  <link rel="stylesheet" href="style/mainStyle.css">
+  <link rel="stylesheet" href="style/slider.css">
+  <link rel="stylesheet" href="style/dropdown.css">
+  <link rel="stylesheet" href="style/tools.css">
+  
+
+</head>
+<header>
+  <h1>Embedding Testing and Geoserver integration Testing</h1>
+</header>
+<body>
+  <div style = "float: left; width: 50%;">
+    <h2>Metabase Embed</h2>
+    <iframe src="http://metabase.apps.k8s.vertechcon.lan/public/dashboard/4d4f2a0a-f6aa-451f-b261-4b83fcb3268c#bordered=true&titled=true", frameborder="0", width="100%", height="600", allowtransparency></iframe>
+  </div>
+  <div style = "float: left; width: 50%;">
+    <h2>Geoserver Map</h2>
+    <div id="geoServTestMap" style="height: 500px;"></div>
+    <script>
+      var mainmap = L.map('geoServTestMap').setView([45.556205, -73.711284], 11);   
+  
+      //Base tileset using MapBox
+      var basemapLayer= L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoiYXJ6ZW5jaGFuIiwiYSI6ImNqc2V5eDRnczBud3Y0YXFuZThhdDlucjgifQ.2wvGQ9Ok5wAZSVg5FRP06w'
+      });
+      mainmap.addLayer(basemapLayer);
+      
+      var wmsLayer= L.tileLayer.wms("http://geoserver.apps.k8s.vertechcon.lan/geoserver/wms", {
+          layers: 'Test:211_Filter',
+          format: 'image/png',
+          transparent: true
+      });
+      mainmap.addLayer(wmsLayer);
+      
+      </script>
+      
+  </div>
+
+  <!-- COMMENTED OUT OLD MAP! 
+  <div id="mainOptions">
+    <div id = "layersOptions" class = "optionsPanel">
+      <h3>Layers</h3>
+      <p>Click to show/hide</p>
+      <!- -Income Gap- -></p>
+      
+      <div class = "option" id = "incomeLeg" style="background-color: #666666">
+        <a href="javascript:void(0)" onclick="choroToggle(incomeLayer, 'incomeLeg', 'incomeLegend')">
+          Income
+        </a>
+        <div id="incomeLegend">
+          <table class = "chloroLegend">
+            <tr><td style="color: #ffffff; -webkit-text-stroke: 1px grey; ">⬤</td><td>&lt;15k</td></tr>
+            <tr><td style="color: #cccccc">⬤</td><td>15k-30k</td></tr>
+            <tr><td style="color: #999999">⬤</td><td>30k-45k</td></tr>
+            <tr><td style="color: #666666">⬤</td><td>45k-60k</td></tr>
+            <tr><td style="color: #333333">⬤</td><td>60k-75k</td></tr>
+            <tr><td style="color: #000000">⬤</td><td>&gt;75k</td></tr>
+          </table>
+        </div>
+      </div>
+      <p></p>
+    </div>
+    
+    <!- -TOOLS BELOW- ->
+
+    <div id = "toolsOptions" class = "optionsPanel">
+      <h3>Tools</h3>
+      <p>Interactive</p>
+      Click to select tool<br>
+      <!- -SELECT TOOL- ->
+      <div class="tool" id="selectTool">
+        <a href="javascript:void(0)" onclick="toolSelect('select')">
+          Select
+        </a>
+      </div>
+      <!- -DISTANCE TOOL- ->
+      <div class="tool" id="distanceTool">
+        <a href="javascript:void(0)" onclick="toolSelect('radDist')">
+          Distance
+        </a>
+        <div class ="toolOptions" id = "distToolOptions">
+          <p>
+            Number: <span id = "distNumber">0</span>
+          </p>
+          <p>
+            Avg. Distance: <span id = "distAvgDist">0</span>
+          </p>
+          <p>
+            Nearest Distance: <span id = "distNearDist">0</span>
+          </p>
+          <p>
+            <div class="dropdown">
+              Layer: <br>
+              <button id = "distDropBtn" value = "" onclick="distDropDown()" class="dropbtn">Default</button>
+              <div id="distDropDown" class="dropdown-content">
+              </div>
+            </div>
+          </p>
+          <p>
+            Radius: <span id="distToolRad"></span>
+            <input type="range" min="1" max="2000" value="500" class="slider" id="distToolSlider"></br>
+          </p>
+          <p>
+            <button onclick="radDistReset()">
+              Clear
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <p>Basemap</p>
+      <!- -HEATMAP TOOL- ->
+      <div class="tool" id="heatmapTool">
+        <a href="javascript:void(0)" onclick="">
+          Heatmap
+        </a>
+        <div class ="toolOptions" id = "distToolOptions"> 
+          <p>
+            <div class="dropdown">
+              Layer: <br>
+              <button id = "heatDropBtn" value = "" onclick="heatDropDown()" class="dropbtn">Select Layer</button>
+              <div id="heatDropDown" class="dropdown-content">
+              </div>
+            </div>
+          </p>
+          <p>
+            Intensity: <span id="heatIntensity"></span>
+            <input type="range" min="1" max="2000" value="500" class="slider" id="heatToolSlider"></br>
+          </p>
+          <p>
+            <button onclick="heatmapShow()">
+              Show
+            </button>
+            <button onclick="heatmapHide()">
+              Hide
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id ='mapDiv'>
+    <div id='mainMap' style='height: 800px;'></div>
+    <script src = 'js/mapDeclarations.js'></script>
+    <script src = "js/tools.js"></script>
+    <script src = 'js/layerLoading.js'></script>
+    <script src = 'js/popupFormats.js'></script>
+    <script src = 'js/mainMap.js'></script>
+    <script>choroToggle(incomeLayer, 'incomeLeg', 'incomeLegend')</script> <!- - Default to disabled - ->
+  </div>
+  
+  <div id="endTest">
+    <button onclick="test()">TESTING</button><!- -This button is just for testing random things. Test() can be reassigned to different temporary functions- ->
+    <button data-jscolor="{value:'000000'}"></button>
+    <script>
+      
+    </script>
+  </div>
+  <p>This is a work in progress. The datasets used are largely here for demonstration do not form a set.</p>
+  <p>Arzen Chan - 2020</p>
+  -->
+</body>
+
+<footer>
+  <!-- COMMENTED OUT OLD MAP
+  <script src = "js/legendGen.js"></script>
+  <script src = "js/radDist.js"></script>
+  <script src = "js/heatmap.js"></script>
+  -->
+</footer>
+
+</html>
